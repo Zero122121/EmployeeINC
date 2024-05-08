@@ -1,0 +1,49 @@
+﻿<Window x:Class="EmployeeINC.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeINC"
+        mc:Ignorable="d"
+        WindowStartupLocation ="CenterScreen"
+        Title="Registration"  Height="232" Width="338" ResizeMode="NoResize" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent" >
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="3" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="18" Background="#1a1f25">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Label Grid.Row="0" Foreground="White" Content="Регистрация"  FontFamily="Bahnschrift" FontSize="28" Width="175" Height="40" Margin="90,15,0,0" />
+
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\login.png" Margin="30,10,0,10" Width="24" Height="29"/>
+                    <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\lock.png" Margin="30,15,0,10" Width="24" Height="29"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login" Grid.Row="1"  Width="250"  Height="35" Margin="0,5" HorizontalAlignment="Left"/>
+                    <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Parol" Grid.Row="1"  Width="250"  Height="35" Margin="0,15" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Grid>
+
+            <Button Style="{DynamicResource RoundButton}" Grid.Row="2" Background="#e6b333" Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="278" HorizontalAlignment="Left"  Click="reg_click" Margin="35,0,0,17" Content="Sign In"/>
+        </Grid>
+    </Border>
+</Window>

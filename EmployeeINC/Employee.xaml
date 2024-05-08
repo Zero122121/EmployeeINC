@@ -1,0 +1,55 @@
+﻿<Window x:Class="EmployeeINC.Employee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeINC"
+        mc:Ignorable="d"
+        WindowStartupLocation ="CenterScreen"
+        Title="Сотрудники" Height="450" Width="858">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="3" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="225"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer >
+
+            <DataGrid FontSize="14" Background="White" FontFamily="Bahnschrift" x:Name="EmployeeGrid" Grid.Column="0"  AutoGenerateColumns="False"  >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Фамилия}" Header="Фамилия" Width="120"/>
+                    <DataGridTextColumn Binding="{Binding Имя}" Header="Имя" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Отчество}" Header="Отчество" Width="150"/>
+                    <DataGridTextColumn Binding="{Binding Должность}" Header="Должность" Width="200"/>
+                    <DataGridTextColumn Binding="{Binding Телефон}" Header="Телефон" Width="100"/>
+                    <DataGridTextColumn Binding="{Binding Отдел}" Header="Отдел" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <StackPanel Grid.Column="1" Orientation="Vertical" Background="#1a1f25">
+            <TextBox GotFocus="RemoveText" LostFocus="AddText" Background="#1a1f25"  FontFamily="Bahnschrift" Foreground="Gray"  BorderBrush="#22272d" BorderThickness="2,2,2,2" 
+                     Grid.Column="1" Height="30" Width="193" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" 
+                     x:Name="Search" Text="Search..." HorizontalAlignment="Center" TextChanged="Search_Tbox_TextChanged" Margin="0,15,5,0"/>
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  Click="export_click" Margin="0,140,0,0" Content="Экспортировать"/>
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  Click="dobav_click" Margin="0,10,0,0" Content="Добавить"/>
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
+        Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
+        Click="red_click" Margin="0,10,0,0" Content="Изменить"/>
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
+                    Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
+                    Click="delete_click" Margin="0,10,0,0" Content="Удалить"/>
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
+        Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
+        Click="back_click" Margin="0,10,0,0" Content="Назад"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

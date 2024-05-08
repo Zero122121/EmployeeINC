@@ -1,0 +1,46 @@
+﻿<Window x:Class="EmployeeINC.Add"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeINC" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        WindowStartupLocation ="CenterScreen"
+        Title="Add" Height="256" Width="330" ResizeMode="NoResize" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="3" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="18" Background="#1a1f25">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Foreground="White" Content="Отпуск" FontFamily="Bahnschrift" FontSize="28" Width="98" HorizontalAlignment="Center" Margin="0,0,0,5" />
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Background="#e6b333" Foreground="White" Height="36" 
+FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="227"   Click="add_click" Content="Sign In"/>
+            <Grid Grid.Row="1">
+
+
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" 
+          ItemsSource="{Binding}" SelectedValuePath="ID_Сотрудника" DisplayMemberPath="ID_Сотрудника" Width="193" Height="30" 
+          Background="#1a1f25" Margin="0,10"/>
+                    <DatePicker FontSize="15" Foreground="Gray" 
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateNach" Margin="10,10,0,0" Width="249" />
+                    <DatePicker FontSize="15" Foreground="Gray" 
+         BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateCon" Margin="10,10,0,0" Width="249" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
