@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeeINC"
         mc:Ignorable="d"
-        WindowStartupLocation ="CenterScreen"
+        WindowStartupLocation="CenterScreen"
         Title="Больничные" Height="450" Width="848">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -18,40 +17,55 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="225"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="225" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer >
+        <ScrollViewer>
 
-            <DataGrid  FontSize="14" Background="White" FontFamily="Bahnschrift" x:Name="VacationGrid" Grid.Column="0" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Сотрудники.Фамилия}" Header="Фамилия" Width="200"/>
-                    <DataGridTextColumn Binding="{Binding Дата_начала}" Header="Дата начала" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Дата_завершения}" Header="Дата завершения" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Номер_больничного}" Header="Номер больничного" Width="180"/>
-                    <DataGridTextColumn Binding="{Binding Диагноз}" Header="Диагноз" Width="180"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <StackPanel Name="Content">
+                <Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Фамилия" FontWeight="Bold" FontSize="18"
+                                   FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="1" Text="Дата начала" FontWeight="Bold" FontSize="18"
+                                   FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="2" Text="Дата завершения" FontWeight="Bold" FontSize="18"
+                                   FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="3" Text="Номер" FontWeight="Bold" FontSize="18"
+                                   FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="4" Text="Диагноз" FontWeight="Bold" FontSize="18"
+                                   FontFamily="Bahnschrift" />
+                    </Grid>
+                </Border>
+                <Separator />
+            </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Column="1" Orientation="Vertical" Background="#1a1f25">
-            <TextBox GotFocus="RemoveText" LostFocus="AddText" Background="#1a1f25"  FontFamily="Bahnschrift" Foreground="Gray"  BorderBrush="#22272d" BorderThickness="2,2,2,2" 
-             Grid.Column="1" Height="30" Width="193" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" 
-             x:Name="Search" Text="Search..." HorizontalAlignment="Center" TextChanged="Search_Tbox_TextChanged" Margin="0,15,5,0"/>
-            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" 
-                    Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" 
-                    HorizontalAlignment="Center"  Click="export_click" Margin="0,140,0,0" Content="Экспортировать"/>
-            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" 
-                    Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" 
-                    HorizontalAlignment="Center"  Click="dobav_click" Margin="0,10,0,0" Content="Добавить"/>
-            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
-Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
-Click="red_click" Margin="0,10,0,0" Content="Изменить"/>
-            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
-            Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
-            Click="delete_click" Margin="0,10,0,0" Content="Удалить"/>
-            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"  Grid.Row="2" Background="#e6b333" Foreground="White" 
-Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="175" HorizontalAlignment="Center"  
-Click="back_click" Margin="0,10,0,0" Content="Назад"/>
+            <TextBox GotFocus="RemoveText" LostFocus="AddText" Background="#1a1f25" FontFamily="Bahnschrift"
+                     Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2"
+                     Height="30" Width="193" HorizontalContentAlignment="Left"
+                     VerticalContentAlignment="Center" FontSize="15"
+                     x:Name="Search" Text="Search..." HorizontalAlignment="Center"
+                     TextChanged="Search_Tbox_TextChanged" Margin="0,15,5,0" />
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"
+                    Height="35"
+                    Width="175"
+                    HorizontalAlignment="Center" Click="export_click" Margin="0,140,0,0" Content="Экспортировать" />
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"
+                    Height="35"
+                    Width="175"
+                    HorizontalAlignment="Center" Click="dobav_click" Margin="0,10,0,0" Content="Добавить" />
+            <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"
+                    Height="35" Width="175"
+                    HorizontalAlignment="Center"
+                    Click="back_click" Margin="0,10,0,0" Content="Назад" />
 
         </StackPanel>
     </Grid>

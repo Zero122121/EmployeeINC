@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using EmployeeINC.Database.Tables;
 
 namespace EmployeeINC
 {
@@ -19,12 +10,9 @@ namespace EmployeeINC
     {
         public MainWindow()
         {
+            DB.Database.Connect();
             InitializeComponent();
-
-
         }
-
-       
 
         private void TransitionWindowToMain()
         {
@@ -35,21 +23,22 @@ namespace EmployeeINC
 
         private void Reg_Click(object sender, RoutedEventArgs e)
         {
-            var user = DataAcEntities1.GetContext().User
-                .Where(u => u.Password == Parol.Text && u.Login == login.Text)
-                .Select(u => u)
-                .FirstOrDefault();
+            User user = (User)new User().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT * FROM User WHERE Login = '{login.Text}'")).FirstOrDefault();
             if (user != null)
             {
-                TransitionWindowToMain();
+                MessageBox.Show("Такой пользователь уже есть!");
+                return;
             }
+
+            DB.Database.ExecuteQuery($"INSERT INTO User (Login, Password, role) VALUES ('{login.Text}', '{Parol.Text}', 'guest')");
+            TransitionWindowToMain();
         }
 
         private void loginn_Click(object sender, RoutedEventArgs e)
         {
-            var user = DataAcEntities1.GetContext().User
-                .Where(u => u.Password == Parol.Text && u.Login == login.Text)
-                .Select(u => u)
+            User user = (User)new User().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT * FROM User WHERE Login = '{login.Text}' AND Password = '{Parol.Text}'"))
                 .FirstOrDefault();
             if (user != null)
             {
@@ -65,6 +54,7 @@ namespace EmployeeINC
                 login.Foreground = Brushes.White;
             }
         }
+
         private void AddText(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(login.Text))
@@ -82,9 +72,9 @@ namespace EmployeeINC
                 Parol.Foreground = Brushes.White;
             }
         }
+
         private void AdText(object sender, EventArgs e)
         {
-
             if (string.IsNullOrWhiteSpace(Parol.Text))
             {
                 Parol.Text = "Введите пароль";
@@ -92,6 +82,4 @@ namespace EmployeeINC
             }
         }
     }
-   
 }
-

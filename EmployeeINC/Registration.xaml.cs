@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using EmployeeINC.Database.Tables;
 
 namespace EmployeeINC
 {
-  
     public partial class Registration : Window
     {
         public Registration()
@@ -31,6 +31,7 @@ namespace EmployeeINC
                 login.Foreground = Brushes.White;
             }
         }
+
         private void AddText(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(login.Text))
@@ -48,9 +49,9 @@ namespace EmployeeINC
                 Parol.Foreground = Brushes.White;
             }
         }
+
         private void AdText(object sender, EventArgs e)
         {
-
             if (string.IsNullOrWhiteSpace(Parol.Text))
             {
                 Parol.Text = "Введите пароль";
@@ -62,11 +63,17 @@ namespace EmployeeINC
         {
             if (!string.IsNullOrEmpty(login.Text) && !string.IsNullOrEmpty(Parol.Text))
             {
-                User _account = new User();
-                _account.Login = login.Text;
-                _account.Password = Parol.Text;
-                DataAcEntities1.GetContext().User.Add(_account);
-                DataAcEntities1.GetContext().SaveChanges();
+                User account = new User
+                {
+                    Login = login.Text,
+                    Password = Parol.Text
+                };
+                DB.Database.Query($"INSERT INTO User(Login, Password, role) " +
+                                  $"VALUES ('{account.Login}', '{account.Password}', 'guest');");
+                App.CurrentUser = (User)new User().ConvertToTable(DB.Database
+                    .ExecuteQuery($"SELECT * FROM User " +
+                                  $"WHERE Login = '{account.Login}' AND Password = '{account.Password}'")
+                    .FirstOrDefault());
                 MessageBox.Show("Регистрация прошла успешно!");
                 TransitionWindowToMain();
             }
@@ -74,8 +81,6 @@ namespace EmployeeINC
             {
                 MessageBox.Show("Пожалуйста, заполните все поля");
             }
-
-            
         }
 
         private void TransitionWindowToMain()

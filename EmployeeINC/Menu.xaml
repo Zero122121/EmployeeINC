@@ -14,10 +14,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" Grid.Column="0" Background="#1a1f25">
-            <Button Style="{DynamicResource RoundButton}" Content="Сотрудники" Grid.Column="0" Click="Employee_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Отпуски" Grid.Column="0"  Click="Vacations_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Больничные" Grid.Column="0" Click="Hospitals_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Должности" Grid.Column="0" Click="do_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Style="{DynamicResource RoundButton}" Content="Сотрудники" Click="Employee_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Style="{DynamicResource RoundButton}" Content="Отпуски" Click="Vacations_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Style="{DynamicResource RoundButton}" Content="Больничные" Click="Hospitals_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Style="{DynamicResource RoundButton}" Content="Должности" Click="do_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Style="{DynamicResource RoundButton}" Content="Отделы" Click="departments_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
             
 
 

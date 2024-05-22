@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EmployeeINC.Database.Tables;
 
 namespace EmployeeINC
 {
@@ -19,14 +20,15 @@ namespace EmployeeINC
     /// </summary>
     public partial class AddWindoww : Window
     {
-        private Должности _employee;
+        private Должности _employee = null;
+
         public AddWindoww(Должности сотрудники = null)
         {
             InitializeComponent();
-            _employee = сотрудники;
             if (сотрудники != null)
             {
                 LoadData();
+                _employee = сотрудники;
             }
         }
 
@@ -44,6 +46,7 @@ namespace EmployeeINC
                 LastName.Foreground = Brushes.White;
             }
         }
+
         private void AddText(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(LastName.Text))
@@ -61,6 +64,7 @@ namespace EmployeeINC
                 Surname.Foreground = Brushes.White;
             }
         }
+
         private void AddText1(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Surname.Text))
@@ -72,16 +76,18 @@ namespace EmployeeINC
 
         private void add_click(object sender, RoutedEventArgs e)
         {
-            Должности сотрудники = new Должности();
-            сотрудники.Наименование = LastName.Text;
-            сотрудники.Ставка = Convert.ToInt32(Surname.Text);
+            Должности д = new Должности
+            {
+                Наименование = LastName.Text,
+                Ставка = Convert.ToInt32(Surname.Text)
+            };
 
-            DataAcEntities1.GetContext().Должности.Add(сотрудники);
-            DataAcEntities1.GetContext().SaveChanges();
+            DB.Database.Query($"INSERT INTO Должности (Наименованиеи, Ставка) VALUES ('{д.Наименование}', {д.Ставка})");
+
             MessageBox.Show("Должность была добавлен в базу");
             dolshnosti em = new dolshnosti();
             em.Show();
-            this.Close();
+            Close();
         }
     }
 }

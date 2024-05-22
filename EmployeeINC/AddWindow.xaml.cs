@@ -11,26 +11,34 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EmployeeINC.Database.Tables;
 
 namespace EmployeeINC
 {
-    /// <summary>
-    /// Логика взаимодействия для AddWindow.xaml
-    /// </summary>
     public partial class AddWindow : Window
     {
         private Сотрудники _employee;
+
         public AddWindow(Сотрудники сотрудники = null)
         {
             InitializeComponent();
-            bindcombo();
+            var отделы = 
+                (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
+            ComboOtdel.ItemsSource = отделы.Select(e => e.Name);
+            if(отделы.Length != 0) ComboOtdel.SelectedItem = отделы[0].Name;
+            
+            var должности =
+                (Должности[])new Должности().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Должности"));
+
+            ComboDol.ItemsSource = должности.Select(e => e.Наименование);
+            if(должности.Length != 0) ComboDol.SelectedItem = должности[0].Наименование;
+
             _employee = сотрудники;
+            bindcombo();
             if (сотрудники != null)
             {
                 LoadData();
             }
-
-            
         }
 
         private void LoadData()
@@ -39,36 +47,51 @@ namespace EmployeeINC
             Surname.Text = _employee.Имя;
             Otchestvo.Text = _employee.Отчество;
             phone.Text = Convert.ToString(_employee.Телефон);
-            ComboOtdel.Text = _employee.Отдел;
-            ComboDol.Text = _employee.Должность;
+            ComboOtdel.Text = _employee.Отдел == null ? "" : _employee.Отдел.Name;
+            ComboDol.Text = _employee.Должность == null ? "" : _employee.Должность.Наименование;
         }
 
         private void add_click(object sender, RoutedEventArgs e)
         {
-            Сотрудники сотрудники = new Сотрудники();
-            сотрудники.Фамилия = LastName.Text;
-            сотрудники.Имя = Surname.Text;
-            сотрудники.Отчество = Otchestvo.Text;
-            сотрудники.Телефон = Convert.ToInt32(phone.Text);
-            сотрудники.Отдел = ComboOtdel.Text;
-            сотрудники.Должность = ComboDol.Text;
+            Сотрудники c = new Сотрудники
+            {
+                Фамилия = LastName.Text,
+                Имя = Surname.Text,
+                Отчество = Otchestvo.Text,
+                Телефон = phone.Text,
+                Дата_начала_работы = DateStart.SelectedDate.ToString(),
+            };
+            var отдел = DB.Database.ExecuteQuery($"SELECT * FROM Отделы WHERE Name = '{ComboOtdel.SelectedItem}'")
+                .FirstOrDefault();
+            if (отдел != null && отдел.TryGetValue("ID_Отдела", out object отделObject))
+            {
+                c.ID_Отдел = int.Parse(отделObject.ToString());
+                Console.WriteLine($"номер отдела: {отделObject}");
+            }
+            
+            var должность = DB.Database.ExecuteQuery($"SELECT * FROM Должности WHERE Наименованиеи = '{ComboDol.SelectedItem}'").FirstOrDefault();
+            if (должность != null && должность.TryGetValue("ID_Должности", out object должностьObject))
+            {
+                c.ID_Должность = int.Parse(должностьObject.ToString());
+                Console.WriteLine($"номер должность: {должностьObject}");
+            }
 
-            DataAcEntities1.GetContext().Сотрудники.Add(сотрудники);
-            DataAcEntities1.GetContext().SaveChanges();
+            DB.Database.Query(
+                $"INSERT INTO Сотрудники (Фамилия, Имя, Отчество, Телефон, Отдел, Должность, Дата_начала_работы) " +
+                $"VALUES ('{c.Фамилия}', '{c.Имя}', '{c.Отчество}', '{c.Телефон}', {c.ID_Отдел}, {c.ID_Должность}, '{c.Дата_начала_работы}')");
+
             MessageBox.Show("Сотрудник был добавлен в базу");
             Employee em = new Employee();
             em.Show();
-            this.Close();
-            
+            Close();
         }
 
+        public Должности[] Dolsh { get; set; }
 
-        public List<Должности> Dolsh {  get; set; }
         private void bindcombo()
         {
-            DataAcEntities1 dc = new DataAcEntities1();
-
-            var items = dc.dol.ToList();
+            var items = (Должности[])new Должности().ConvertToTables(
+                DB.Database.ExecuteQuery($"SELECT * FROM Должности;"));
             Dolsh = items;
             DataContext = Dolsh;
         }
@@ -81,6 +104,7 @@ namespace EmployeeINC
                 LastName.Foreground = Brushes.White;
             }
         }
+
         private void AddText(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(LastName.Text))
@@ -98,6 +122,7 @@ namespace EmployeeINC
                 Surname.Foreground = Brushes.White;
             }
         }
+
         private void AddText1(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Surname.Text))
@@ -115,6 +140,7 @@ namespace EmployeeINC
                 Otchestvo.Foreground = Brushes.White;
             }
         }
+
         private void AddText2(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Otchestvo.Text))
@@ -132,6 +158,7 @@ namespace EmployeeINC
                 phone.Foreground = Brushes.White;
             }
         }
+
         private void AddText3(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(phone.Text))
@@ -140,7 +167,5 @@ namespace EmployeeINC
                 phone.Foreground = Brushes.Gray;
             }
         }
-
-        
     }
 }

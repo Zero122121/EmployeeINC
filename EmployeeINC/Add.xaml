@@ -25,8 +25,9 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Foreground="White" Content="Отпуск" FontFamily="Bahnschrift" FontSize="28" Width="98" HorizontalAlignment="Center" Margin="0,0,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Background="#e6b333" Foreground="White" Height="36" 
-FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="227"   Click="add_click" Content="Sign In"/>
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"
+                    Height="36"
+                    Width="227"   Click="add_click" Content="Sign In"/>
             <Grid Grid.Row="1">
 
 

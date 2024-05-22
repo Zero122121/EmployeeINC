@@ -25,7 +25,7 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <Label Grid.Row="0" Foreground="White" Content="Регистрация"  FontFamily="Bahnschrift" FontSize="28" Width="175" Height="40" Margin="90,15,0,0" />
+                <Label Foreground="White" Content="Регистрация"  FontFamily="Bahnschrift" FontSize="28" Width="175" Height="40" Margin="90,15,0,0" />
 
             </StackPanel>
             <Grid Grid.Row="1">
@@ -38,12 +38,14 @@
                     <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\lock.png" Margin="30,15,0,10" Width="24" Height="29"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login" Grid.Row="1"  Width="250"  Height="35" Margin="0,5" HorizontalAlignment="Left"/>
-                    <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Parol" Grid.Row="1"  Width="250"  Height="35" Margin="0,15" HorizontalAlignment="Left"/>
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login"
+                             Width="250"  Height="35" Margin="0,5" HorizontalAlignment="Left"/>
+                    <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Parol"
+                             Width="250"  Height="35" Margin="0,15" HorizontalAlignment="Left"/>
                 </StackPanel>
             </Grid>
 
-            <Button Style="{DynamicResource RoundButton}" Grid.Row="2" Background="#e6b333" Foreground="White" Height="35" FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="278" HorizontalAlignment="Left"  Click="reg_click" Margin="35,0,0,17" Content="Sign In"/>
+            <Button Style="{DynamicResource RoundButton}" Grid.Row="2" Height="35" Width="278" HorizontalAlignment="Left"  Click="reg_click" Margin="35,0,0,17" Content="Sign In"/>
         </Grid>
     </Border>
 </Window>

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EmployeeINC.Windows;
 
 namespace EmployeeINC
 {
@@ -53,6 +54,13 @@ namespace EmployeeINC
         private void do_Click(object sender, RoutedEventArgs e)
         {
             dolshnosti s = new dolshnosti();
+            s.Show();
+            Close();
+        }
+
+        private void departments_Click(object sender, RoutedEventArgs e)
+        {
+            Departments s = new Departments();
             s.Show();
             Close();
         }

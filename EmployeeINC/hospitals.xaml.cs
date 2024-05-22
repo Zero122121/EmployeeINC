@@ -1,18 +1,11 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using EmployeeINC.Database.Tables;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace EmployeeINC
@@ -20,17 +13,90 @@ namespace EmployeeINC
     /// <summary>
     /// Логика взаимодействия для hospitals.xaml
     /// </summary>
-    public partial class hospitals : System.Windows.Window
+    public partial class hospitals : Window
     {
+        public readonly List<(UIElement, UIElement, Больничные)> Больничные =
+            new List<(UIElement, UIElement, Больничные)>();
         public hospitals()
         {
             InitializeComponent();
-            ShowTable(DataAcEntities1.GetContext().Больничные);
+            ShowTable();
         }
 
-        private void ShowTable<T>(DbSet<T> query) where T : class
+        private void ShowTable(string searchText = "")
         {
-            VacationGrid.ItemsSource = query.ToList();
+            for (int i = 1; i < Больничные.Count; i++)
+            {
+                (UIElement, UIElement, Больничные) tuple = Больничные[i];
+                tuple.Item1 = null;
+                tuple.Item2 = null;
+                Больничные[i] = tuple;
+            }
+
+            var array = (Больничные[])new Больничные().ConvertToTables(
+                DB.Database.ExecuteQuery($"SELECT * FROM Больничные"));
+
+            array = array.Where(e => e.Сотрудник.Фамилия.Contains(searchText) ||e.Сотрудник.Фамилия.Contains(searchText) ||
+                                     e.Сотрудник.Отчество.Contains(searchText) || e.Диагноз.Contains(searchText) ||
+                                     e.Номер_больничного.ToString().Contains(searchText) || e.Дата_завершения.Contains(searchText))
+                .ToArray();
+
+            foreach (Больничные больничные in array)
+            {
+                Border border = new Border();
+                Grid grid = new Grid();
+                var list = new List<string>()
+                {
+                    $"{больничные.Сотрудник.Фамилия} {больничные.Сотрудник.Имя[0]}.{больничные.Сотрудник.Отчество[0]}.",
+                    $"{больничные.Дата_начала}",
+                    $"{больничные.Дата_завершения}",
+                    $"{больничные.Номер_больничного}",
+                    $"{больничные.Диагноз}"
+                };
+                for (int i = 0; i < 5; i++)
+                {
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                    TextBlock textBlock1 = new TextBlock
+                    {
+                        Text = list[i],
+                        FontSize = 18,
+                        FontFamily = new FontFamily("Bahnschrift")
+                    };
+                    Grid.SetColumn(textBlock1, i);
+                    grid.Children.Add(textBlock1);
+                }
+
+                border.Name = "id_" + больничные.ID_Больничные;
+                border.Child = grid;
+
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem = new MenuItem() { Header = "Удалить" };
+                contextMenu.Items.Add(menuItem);
+                MenuItem menuItemEdit = new MenuItem() { Header = "Редактировать" };
+                contextMenu.Items.Add(menuItemEdit);
+                border.ContextMenu = contextMenu;
+
+                Content.Children.Add(border);
+
+                Separator separator = new Separator();
+                Content.Children.Add(separator);
+
+                Больничные.Add((border, separator, больничные));
+
+                menuItem.Click += (sender, e) =>
+                {
+                    DB.Database.Query($"DELETE FROM Сотрудники WHERE ID_Сотрудника = {больничные.ID_Сотрудника}");
+                    Content.Children.Remove(border);
+                    Content.Children.Remove(separator);
+                };
+                menuItemEdit.Click += (sender, e) =>
+                {
+                    var window = new Addd(больничные);
+                    window.Show();
+                    Close();
+                };
+            }
         }
 
         private void RemoveText(object sender, EventArgs e)
@@ -49,41 +115,38 @@ namespace EmployeeINC
                 Search.Foreground = Brushes.Gray;
             }
         }
-
-        private void Search_Tbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                VacationGrid.ItemsSource = DataAcEntities1.GetContext().Больничные.Where(item => item.Сотрудники.Фамилия == Search.Text ||
-                item.Сотрудники.Фамилия.Contains(Search.Text)).ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        private void Search_Tbox_TextChanged(object sender, TextChangedEventArgs e) => ShowTable(Search.Text);
 
         private void export_click(object sender, RoutedEventArgs e)
         {
             Excel.Application excel = new Excel.Application();
             excel.Visible = true;
-            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+            Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
+            Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];   
+            List<string> headers = new List<string>() { "ФИО", "Дата_начала", "Дата_завершения", "Номер_больничного", "Диагноз" };
 
-            for (int j = 0; j < VacationGrid.Columns.Count; j++)
+
+            for (int j = 0; j < 5; j++)
             {
-                Range myRange = (Range)sheet1.Cells[1, j + 1];
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
                 sheet1.Columns[j + 1].ColumnWidth = 20;
-                myRange.Value2 = VacationGrid.Columns[j].Header;
+                myRange.Value2 = headers[j];
             }
-            for (int i = 0; i < VacationGrid.Columns.Count; i++)
+            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < VacationGrid.Items.Count; j++)
+                for (int j = 0; j < Больничные.Count; j++)
                 {
-                    TextBlock b = VacationGrid.Columns[i].GetCellContent(VacationGrid.Items[j]) as TextBlock;
-                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
-                    myRange.Value2 = b.Text;
+                    Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, i + 1];
+                    myRange.Value2 = i switch
+                    {
+                        0 => ($"{Больничные[j].Item3.Сотрудник.Фамилия} {Больничные[j].Item3.Сотрудник.Имя} {Больничные[j].Item3.Сотрудник.Отчество}"),
+                        1 => Больничные[j].Item3.Дата_начала,
+                        2 => Больничные[j].Item3.Дата_завершения,
+                        3 => Больничные[j].Item3.Номер_больничного,
+                        4 => Больничные[j].Item3.Диагноз,
+                        _ => myRange.Value2
+                    };
                 }
             }
         }
@@ -93,33 +156,6 @@ namespace EmployeeINC
             Addd ma = new Addd();
             ma.Show();
             Close();
-        }
-
-        private void red_click(object sender, RoutedEventArgs e)
-        {
-            object abonent = VacationGrid.SelectedItem;
-            Больничные больничные = abonent as Больничные;
-            Addd menu = new Addd(больничные);
-            menu.Show();
-            Close();
-            var CurrentUser = VacationGrid.SelectedItem as Больничные;
-            DataAcEntities1.GetContext().Больничные.Remove(CurrentUser);
-            DataAcEntities1.GetContext().SaveChanges();
-
-            VacationGrid.ItemsSource = DataAcEntities1.GetContext().Больничные.ToList();
-        }
-
-        private void delete_click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Вы действительно хотите удалить данные", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                var CurrentUser = VacationGrid.SelectedItem as Больничные;
-                DataAcEntities1.GetContext().Больничные.Remove(CurrentUser);
-                DataAcEntities1.GetContext().SaveChanges();
-
-                VacationGrid.ItemsSource = DataAcEntities1.GetContext().Больничные.ToList();
-                MessageBox.Show("Данные удалены");
-            }
         }
 
         private void back_click(object sender, RoutedEventArgs e)

@@ -1,12 +1,13 @@
-﻿using Microsoft.Office.Interop.Excel;
-using System;
-using System.Data;
-using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using EmployeeINC.Database.Tables;
+using EmployeeINC.Windows;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -15,32 +16,117 @@ namespace EmployeeINC
     /// <summary>
     /// Логика взаимодействия для Employee.xaml
     /// </summary>
-    public partial class Employee : System.Windows.Window
+    public partial class Employee : Window
     {
+        public readonly List<(UIElement, UIElement, Сотрудники)> Сотрудники =
+            new List<(UIElement, UIElement, Сотрудники)>();
+
         public Employee()
         {
             InitializeComponent();
-            ShowTable(DataAcEntities1.GetContext().Сотрудники);
+            ShowTable();
         }
 
-        public void ShowTable<T>(DbSet<T> query) where T : class
+        private void ShowTable(string searchText = "")
         {
-            EmployeeGrid.ItemsSource = query.ToList();
+            for (int i = 1; i < Сотрудники.Count; i++)
+            {
+                (UIElement, UIElement, Сотрудники) tuple = Сотрудники[i];
+                tuple.Item1 = null;
+                tuple.Item2 = null;
+                Сотрудники[i] = tuple;
+            }
+
+            var array = (Сотрудники[])new Сотрудники().ConvertToTables(
+                DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники"));
+
+            array = array.Where(e => e.Имя.Contains(searchText) || e.Фамилия.Contains(searchText) ||
+                                     e.Отчество.Contains(searchText) || e.Дата_начала_работы.Contains(searchText) ||
+                                     e.Телефон.Contains(searchText) || e.Дата_начала_работы.Contains(searchText))
+                .ToArray();
+
+            foreach (Сотрудники сотрудник in array)
+            {
+                Border border = new Border();
+                Grid grid = new Grid();
+
+                var tables = (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы;"));
+
+                foreach (var table in tables)
+                {
+                    Console.WriteLine($"[ID_Отдела:{table.ID_Отдела}, Name:{table.Name}]");
+                }
+
+                Console.WriteLine(сотрудник.ID_Отдел);
+                
+                Console.WriteLine(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
+                Console.WriteLine(DB.Database.ExecuteQuery($"SELECT * FROM Отделы WHERE ID_Отдела = {сотрудник.ID_Отдел}").Count);
+                
+                var a = (Отделы)new Отделы().ConvertToTable(DB.Database
+                    .ExecuteQuery($"SELECT * FROM Отделы WHERE ID_Отдела = {сотрудник.ID_Отдел}").FirstOrDefault());
+                
+                Console.WriteLine("[");
+                Console.WriteLine(сотрудник.ID_Должность);
+                Console.WriteLine(сотрудник.Должность.Наименование);
+                Console.WriteLine(сотрудник.Отдел.Name);
+                Console.WriteLine("]");
+
+                var list = new List<string>()
+                {
+                    $"{сотрудник.Фамилия}",
+                    $"{сотрудник.Имя}",
+                    $"{сотрудник.Отчество}",
+                    $"{сотрудник.Должность.Наименование}",
+                    $"{сотрудник.Телефон}",
+                    $"{сотрудник.Отдел.Name}"
+                };
+                for (int i = 0; i < 6; i++)
+                {
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+                    TextBlock textBlock1 = new TextBlock
+                    {
+                        Text = list[i],
+                        FontSize = 18,
+                        FontFamily = new FontFamily("Bahnschrift")
+                    };
+                    Grid.SetColumn(textBlock1, i);
+                    grid.Children.Add(textBlock1);
+                }
+
+                border.Name = "id_" + сотрудник.ID_Сотрудника;
+                border.Child = grid;
+
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem menuItem = new MenuItem() { Header = "Удалить" };
+                contextMenu.Items.Add(menuItem);
+                MenuItem menuItemEdit = new MenuItem() { Header = "Редактировать" };
+                contextMenu.Items.Add(menuItemEdit);
+                border.ContextMenu = contextMenu;
+
+                Content.Children.Add(border);
+
+                Separator separator = new Separator();
+                Content.Children.Add(separator);
+
+                Сотрудники.Add((border, separator, сотрудник));
+
+                menuItem.Click += (sender, e) =>
+                {
+                    DB.Database.Query($"DELETE FROM Сотрудники WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
+                    Content.Children.Remove(border);
+                    Content.Children.Remove(separator);
+                };
+                menuItemEdit.Click += (sender, e) =>
+                {
+                    var editEmployee = new EditEmployee(сотрудник);
+                    editEmployee.Show();
+                    Close();
+                };
+            }
         }
 
-        private void Search_Tbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                EmployeeGrid.ItemsSource = DataAcEntities1.GetContext().Сотрудники.Where(item => item.Фамилия == Search.Text || item.Фамилия.Contains(Search.Text) 
-                || item.Отчество == Search.Text || item.Отчество.Contains(Search.Text) || item.Имя == Search.Text || item.Имя.Contains(Search.Text) 
-                ||  item.Отдел == Search.Text || item.Отдел.Contains(Search.Text)).ToList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        private void Search_Tbox_TextChanged(object sender, TextChangedEventArgs e) => ShowTable(Search.Text);
 
         private void RemoveText(object sender, EventArgs e)
         {
@@ -50,6 +136,7 @@ namespace EmployeeINC
                 Search.Foreground = Brushes.White;
             }
         }
+
         private void AddText(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Search.Text))
@@ -63,26 +150,34 @@ namespace EmployeeINC
         {
             Excel.Application excel = new Excel.Application();
             excel.Visible = true;
-            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
-
-            for (int j = 0; j < EmployeeGrid.Columns.Count; j++)
+            Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
+            Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
+            List<string> headers = new List<string>() { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел" };
+            for (int j = 0; j < 6; j++)
             {
-                Range myRange = (Range)sheet1.Cells[1, j + 1];
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
                 sheet1.Columns[j + 1].ColumnWidth = 20;
-                myRange.Value2 = EmployeeGrid.Columns[j].Header;
-            }
-            for (int i = 0; i < EmployeeGrid.Columns.Count; i++)
-            {
-                for (int j = 0; j < EmployeeGrid.Items.Count; j++)
-                {
-                    TextBlock b = EmployeeGrid.Columns[i].GetCellContent(EmployeeGrid.Items[j]) as TextBlock;
-                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
-                    myRange.Value2 = b.Text;
-                }
+                myRange.Value2 = headers[j];
             }
 
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < Сотрудники.Count; j++)
+                {
+                    Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, i + 1];
+                    myRange.Value2 = i switch
+                    {
+                        0 => Сотрудники[j].Item3.Фамилия,
+                        1 => Сотрудники[j].Item3.Имя,
+                        2 => Сотрудники[j].Item3.Отчество,
+                        3 => Сотрудники[j].Item3.Должность.Наименование,
+                        4 => Сотрудники[j].Item3.Телефон,
+                        5 => Сотрудники[j].Item3.Отдел.Name,
+                        _ => myRange.Value2
+                    };
+                }
+            }
         }
 
         private void dobav_click(object sender, RoutedEventArgs e)
@@ -90,34 +185,6 @@ namespace EmployeeINC
             AddWindow m = new AddWindow();
             m.Show();
             Close();
-        }
-
-        private void delete_click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Вы действительно хотите удалить сотрудника", "Уведомление", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-            {
-                var CurrentUser = EmployeeGrid.SelectedItem as Сотрудники;
-                DataAcEntities1.GetContext().Сотрудники.Remove(CurrentUser);
-                DataAcEntities1.GetContext().SaveChanges();
-
-                EmployeeGrid.ItemsSource = DataAcEntities1.GetContext().Сотрудники.ToList();
-                MessageBox.Show("Сотрудник удален");
-            }
-        }
-
-        private void red_click(object sender, RoutedEventArgs e)
-        {
-            
-            object abonent = EmployeeGrid.SelectedItem;
-            Сотрудники abonent1 = abonent as Сотрудники;
-            AddWindow menu = new AddWindow(abonent1);
-            menu.Show();
-            Close();
-            var CurrentUser = EmployeeGrid.SelectedItem as Сотрудники;
-            DataAcEntities1.GetContext().Сотрудники.Remove(CurrentUser);
-            DataAcEntities1.GetContext().SaveChanges();
-
-            EmployeeGrid.ItemsSource = DataAcEntities1.GetContext().Сотрудники.ToList();
         }
 
         private void back_click(object sender, RoutedEventArgs e)

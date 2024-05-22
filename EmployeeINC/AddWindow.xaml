@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeINC" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        WindowStartupLocation ="CenterScreen"
-        Title="AddWindow" Height="256" Width="500" ResizeMode="NoResize" WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Title="AddWindow" Height="300" Width="500" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -20,48 +20,53 @@
     <Border CornerRadius="18" Background="#1a1f25">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Foreground="White" Content="Сотрудник" FontFamily="Bahnschrift" FontSize="28" Width="147" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Background="#e6b333" Foreground="White" Height="36" 
-FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="227"   Click="add_click" Content="Sign In"/>
+            <Label Grid.Row="0" Foreground="White" Content="Сотрудник" FontFamily="Bahnschrift" FontSize="28"
+                   Width="147" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Grid.Row="2" Height="36" Width="227" Click="add_click" Content="Сохранить" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите фамилию"   HorizontalContentAlignment="Left" 
-          VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-          BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="LastName" Grid.Row="1"  
-          Width="200"  Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top"  />
-                    <TextBox GotFocus="RemoveText1" LostFocus="AddText1" Text="Введите имя"   HorizontalContentAlignment="Left" 
-VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="Surname" Grid.Row="1"  
-Width="200"  Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top"  />
-                    <TextBox GotFocus="RemoveText2" LostFocus="AddText2" Text="Введите отчество"   HorizontalContentAlignment="Left" 
-VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="Otchestvo" Grid.Row="1"  
-Width="200"  Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top"  />
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите фамилию"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="LastName"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBox GotFocus="RemoveText1" LostFocus="AddText1" Text="Введите имя"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Surname"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBox GotFocus="RemoveText2" LostFocus="AddText2" Text="Введите отчество"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Otchestvo"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <DatePicker FontSize="15" Foreground="Gray"
+                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateStart"
+                                Margin="10,10,0,0" Width="227" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBox GotFocus="RemoveText3" LostFocus="AddText3" Text="Введите номер телефона"   HorizontalContentAlignment="Left" 
-VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone" Grid.Row="1"  
-Width="200"  Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top"  />
-                    <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" 
-                               Width="200" Height="30" 
-                              Background="#1a1f25" Margin="0,7">
-                        <sys:String>Разработки</sys:String>
-                        <sys:String>Технич</sys:String>
-                        <sys:String>Маркетинг</sys:String>
-                    </ComboBox>
-                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" 
-          ItemsSource="{Binding}" SelectedValuePath="ID_Должности" DisplayMemberPath="Наименование" Width="200" Height="30" 
-          Background="#1a1f25" Margin="0,10"/>
-
+                    <TextBox GotFocus="RemoveText3" LostFocus="AddText3" Text="Введите номер телефона"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left"
+                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
+                              Width="200" Height="30"
+                              Background="#1a1f25" Margin="0,7" />
+                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
+                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
+                              Width="200" Height="30"
+                              Background="#1a1f25" Margin="0,7" />
                 </StackPanel>
 
             </Grid>

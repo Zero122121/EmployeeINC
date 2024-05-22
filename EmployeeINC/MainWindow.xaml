@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeeINC" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:EmployeeINC"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        WindowStartupLocation ="CenterScreen"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="232" Width="338" ResizeMode="NoResize" WindowStyle="None"
-        AllowsTransparency="True" Background="Transparent"   >
+        AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Style.Resources>
@@ -20,35 +21,46 @@
     <Border CornerRadius="18" Background="#1a1f25">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" Grid.Row="0">
-                <Label Grid.Row="0" Foreground="White" Content="Войти" FontFamily="Bahnschrift" FontSize="28" Width="95" Height="40" HorizontalAlignment="Left" Margin="30,15,0,0" />
-                <Button Style="{DynamicResource RoundButton2}" Content="Register" Height="24" Width="60" VerticalAlignment="Bottom" Click="Reg_Click" FontSize="11" FontFamily="Bahnschrift" Foreground="#7f8084" Margin="122,0,0,5" Background="Transparent" BorderBrush="#22272d" BorderThickness="1,1,1,1"  />
+                <Label Foreground="White" Content="Войти" FontFamily="Bahnschrift" FontSize="28"
+                       Width="95" Height="40" HorizontalAlignment="Left" Margin="30,15,0,0" />
+                <Button Style="{DynamicResource RoundButton2}" Content="Register" Height="24" Width="60"
+                        VerticalAlignment="Bottom" Click="Reg_Click" FontSize="11" FontFamily="Bahnschrift"
+                        Foreground="#7f8084" Margin="122,0,0,5" Background="Transparent" BorderBrush="#22272d"
+                        BorderThickness="1,1,1,1" />
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="1" Grid.Column="0">
-                    <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\login.png" Margin="30,10,0,10" Width="24" Height="29"/>
-                    <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\lock.png" Margin="30,15,0,10" Width="24" Height="29"/>
+                <StackPanel Grid.Column="0">
+                    <Image Source="../Resources\login.png" Margin="30,10,0,10" Width="24" Height="29" />
+                    <Image Source="../Resources\lock.png" Margin="30,15,0,10" Width="24" Height="29" />
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"   HorizontalContentAlignment="Left" 
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login" Grid.Row="1"  
-                             Width="250"  Height="35" Margin="0,5" HorizontalAlignment="Left"/>
-                    <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Parol" Grid.Row="1"  Width="250"  Height="35" Margin="0,15" HorizontalAlignment="Left"/>
+                <StackPanel Grid.Column="1">
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login"
+                             Width="250" Height="35" Margin="0,5" HorizontalAlignment="Left" />
+                    <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль"
+                             HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15"
+                             Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2"
+                             Background="#1a1f25" Name="Parol" Width="250" Height="35" Margin="0,15"
+                             HorizontalAlignment="Left" />
                 </StackPanel>
             </Grid>
 
-            <Button Style="{DynamicResource RoundButton}" Grid.Row="2" Background="#e6b333" Foreground="White" Height="35" 
-                    FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="278" HorizontalAlignment="Left"  Click="loginn_Click" 
-                    Margin="35,0,0,17" Content="Sign In"/>
+            <Button Style="{DynamicResource RoundButton}" Grid.Row="2"
+                    Height="35"
+                    Width="278" HorizontalAlignment="Left"
+                    Click="loginn_Click"
+                    Margin="35,0,0,17" Content="Sign In" />
         </Grid>
     </Border>
 </Window>

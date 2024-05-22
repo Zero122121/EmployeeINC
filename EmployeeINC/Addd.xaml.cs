@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using EmployeeINC.Database.Tables;
 
 namespace EmployeeINC
 {
@@ -22,6 +23,8 @@ namespace EmployeeINC
     public partial class Addd : Window
     {
         private Больничные _employee;
+        private bool _isEdit;
+        
         public Addd(Больничные больничные = null)
         {
             InitializeComponent();
@@ -29,6 +32,7 @@ namespace EmployeeINC
             _employee = больничные;
             if (больничные != null)
             {
+                _isEdit = true;
                 LoadData();
             }
         }
@@ -36,42 +40,48 @@ namespace EmployeeINC
         private void LoadData()
         {
             ComboDol.Text = Convert.ToString(_employee.ID_Сотрудника);
-            DateNach.SelectedDate = _employee.Дата_начала;
-            DateCon.SelectedDate = _employee.Дата_завершения;
+            DateNach.SelectedDate = DateTime.Parse(_employee.Дата_начала);
+            DateCon.SelectedDate = DateTime.Parse(_employee.Дата_завершения);
             phone.Text = Convert.ToString( _employee.Номер_больничного);
             di.Text = _employee.Диагноз;
         }
 
         private void add_click(object sender, RoutedEventArgs e)
         {
-            Больничные сотрудники = new Больничные();
+            Больничные c = new Больничные
+            {
+                ID_Сотрудника = Convert.ToInt32(ComboDol.Text),
+                Дата_начала = DateNach.SelectedDate.ToString(),
+                Дата_завершения = DateCon.SelectedDate.ToString(),
+                Номер_больничного = Convert.ToInt32(phone.Text),
+                Диагноз = di.Text
+            };
+            if (_isEdit)
+            {
+                DB.Database.Query($"UPDATE Больничные SET ID_Сотрудника = {c.ID_Сотрудника}, Дата_завершения = '{c.Дата_завершения}', " +
+                                  $"Номер_больничного = {c.Номер_больничного}, Диагноз = '{c.Диагноз}', Дата_начала = '{c.Дата_начала}' " +
+                                  $"WHERE ID_Больничные = {_employee.ID_Больничные}");
+            }
+            else
+            {
+                DB.Database.Query(
+                    $"INSERT INTO Больничные (ID_Сотрудника, Дата_завершения, Номер_больничного, Диагноз, Дата_начала)" +
+                    $"VALUES ({c.ID_Сотрудника}, '{c.Дата_завершения}', {c.Номер_больничного}, '{c.Диагноз}', '{c.Дата_начала}')");
+            }
 
-            сотрудники.ID_Сотрудника = Convert.ToInt32(ComboDol.Text);
-            сотрудники.Дата_начала = DateNach.SelectedDate;
-            сотрудники.Дата_завершения = DateCon.SelectedDate;
-            сотрудники.Номер_больничного = Convert.ToInt32(phone.Text);
-            сотрудники.Диагноз = di.Text;
-
-            DataAcEntities1.GetContext().Больничные.Add(сотрудники);
-            DataAcEntities1.GetContext().SaveChanges();
-            MessageBox.Show("Данные были добавлены в базу");
+            MessageBox.Show("Данные были сохранены в базу");
             hospitals em = new hospitals();
             em.Show();
-            this.Close();
+            Close();
         }
 
-        public List<Сотрудники> Dolsh { get; set; }
+        public Сотрудники[] Dolsh { get; set; }
         private void bindcombo()
         {
-            DataAcEntities1 dc = new DataAcEntities1();
-
-            var items = dc.sot.ToList();
+            var items = (Сотрудники[])new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники;"));
             Dolsh = items;
             DataContext = Dolsh;
         }
-
-        
-
         private void RemoveText(object sender, EventArgs e)
         {
             if (phone.Text == "Введите номер больничного")

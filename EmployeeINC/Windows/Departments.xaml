@@ -1,11 +1,12 @@
-﻿<Window x:Class="EmployeeINC.Employee"
+﻿<Window x:Class="EmployeeINC.Windows.Departments"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EmployeeINC.Windows"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="Сотрудники" Height="450" Width="858">
+          WindowStartupLocation="CenterScreen"
+        Title="Отделы" Height="450" Width="858">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Style.Resources>
@@ -26,18 +27,8 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Фамилия" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="1" Text="Имя" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="2" Text="Отчество" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="3" Text="Должность" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="4" Text="Телефон" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="5" Text="Отдел" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="0" Text="Наименование" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />
@@ -65,7 +56,7 @@
             <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom" Height="35" Width="175"
                     HorizontalAlignment="Center" Click="export_click" Margin="0,140,0,0" Content="Экспортировать" />
             <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom" Height="35" Width="175"
-                    HorizontalAlignment="Center" Click="dobav_click" Margin="0,10,0,0" Content="Добавить" />
+                    HorizontalAlignment="Center" Click="AddDepartment" Margin="0,10,0,0" Content="Добавить" />
             <Button Style="{DynamicResource RoundButton}" VerticalAlignment="Bottom"
                     Height="35" Width="175" HorizontalAlignment="Center"
                     Click="back_click" Margin="0,10,0,0" Content="Назад" />

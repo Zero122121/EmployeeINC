@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeINC"
         mc:Ignorable="d"
-        WindowStartupLocation ="CenterScreen"
-Title="Больничный" Height="256" Width="500" ResizeMode="NoResize" WindowStyle="None"
-AllowsTransparency="True" Background="Transparent">
+        WindowStartupLocation="CenterScreen"
+        Title="Больничный" Height="256" Width="500" ResizeMode="NoResize" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Style.Resources>
@@ -20,38 +20,46 @@ AllowsTransparency="True" Background="Transparent">
     <Border CornerRadius="18" Background="#1a1f25">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Foreground="White" Content="Больничный" FontFamily="Bahnschrift" FontSize="28" Width="172" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Background="#e6b333" Foreground="White" Height="36" 
-FontSize="14" FontFamily="Bahnschrift" BorderBrush="#22272d" Width="227"   Click="add_click" Content="Sign In"/>
+            <Label Grid.Row="0" Foreground="White" Content="Больничный" FontFamily="Bahnschrift" FontSize="28"
+                   Width="172" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Grid.Row="2"
+                    Height="36"
+                    Width="227" Click="add_click" Content="Сохранить" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" 
-ItemsSource="{Binding}" SelectedValuePath="ID_Сотрудника" DisplayMemberPath="ID_Сотрудника" Width="200" Height="30" 
-Background="#1a1f25" Margin="0,10"/>
-                    <DatePicker FontSize="15" Foreground="Gray" 
-                    BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateNach" Margin="10,10,0,0" Width="227" />
-                    <DatePicker FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateCon" Margin="10,10,0,0" Width="223" />
+                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
+                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
+                              ItemsSource="{Binding}" SelectedValuePath="ID_Сотрудника"
+                              DisplayMemberPath="ID_Сотрудника" Width="200" Height="30"
+                              Background="#1a1f25" Margin="0,10" />
+                    <DatePicker FontSize="15" Foreground="Gray"
+                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateNach"
+                                Margin="10,10,0,0" Width="227" />
+                    <DatePicker FontSize="15" Foreground="Gray"
+                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateCon"
+                                Margin="10,10,0,0" Width="223" />
 
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите номер больничного"   HorizontalContentAlignment="Left" 
-VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone" Grid.Row="1"  
-Width="210"  Height="35" Margin="0,5"  HorizontalAlignment="Center"  />
-                    <TextBox GotFocus="RemoveText2" LostFocus="AddText2" Text="Введите диагноз"   HorizontalContentAlignment="Left" 
-VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" 
-BorderBrush="#22272d"  BorderThickness="2,2,2,2" Background="#1a1f25" Name="di" Grid.Row="1"  
-Width="210"  Height="35" Margin="0,10" HorizontalAlignment="Center"  />
-
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите номер больничного"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
+                             Width="210" Height="35" Margin="0,5" HorizontalAlignment="Center" />
+                    <TextBox GotFocus="RemoveText2" LostFocus="AddText2" Text="Введите диагноз"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="di"
+                             Width="210" Height="35" Margin="0,10" HorizontalAlignment="Center" />
 
 
                 </StackPanel>

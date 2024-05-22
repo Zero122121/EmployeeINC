@@ -1,31 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using EmployeeINC.Database.Tables;
-using EmployeeINC.Windows;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace EmployeeINC
+namespace EmployeeINC.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для dolshnosti.xaml
-    /// </summary>
-    public partial class dolshnosti : Window
+    public partial class Departments : Window
     {
-        public ICommand SortCommand { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
+        public readonly List<(UIElement, UIElement, Отделы)> Отделы =
+            new List<(UIElement, UIElement, Отделы)>();
 
-        public readonly List<(UIElement, UIElement, Должности)> _должности =
-            new List<(UIElement, UIElement, Должности)>();
-
-        public dolshnosti()
+        public Departments()
         {
             InitializeComponent();
             ShowTable();
@@ -33,45 +23,35 @@ namespace EmployeeINC
 
         private void ShowTable(string searchText = "")
         {
-            for (int i = 1; i < _должности.Count; i++)
+            for (int i = 1; i < Отделы.Count; i++)
             {
-                (UIElement, UIElement, Должности) tuple = _должности[i];
+                (UIElement, UIElement, Отделы) tuple = Отделы[i];
                 tuple.Item1 = null;
                 tuple.Item2 = null;
-                _должности[i] = tuple;
+                Отделы[i] = tuple;
             }
 
-            var array = (Должности[])new Должности().ConvertToTables(
-                DB.Database.ExecuteQuery($"SELECT * FROM Должности"));
+            var array = (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
 
-            array = array.Where(e => e.Наименование.Contains(searchText)).ToArray();
+            array = array.Where(e => e.Name.Contains(searchText)).ToArray();
 
-            foreach (Должности должности in array)
+            foreach (Отделы отделы in array)
             {
                 Border border = new Border();
                 Grid grid = new Grid();
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 TextBlock textBlock1 = new TextBlock
                 {
-                    Text = должности.Наименование,
+                    Text = отделы.Name,
                     FontSize = 18,
                     FontFamily = new FontFamily("Bahnschrift")
                 };
-                TextBlock textBlock2 = new TextBlock
-                {
-                    Text = должности.Ставка.ToString(),
-                    FontSize = 18,
-                    FontFamily = new FontFamily("Bahnschrift")
-                };
-
-                Grid.SetColumn(textBlock2, 1);
-
+                Grid.SetColumn(textBlock1, 0);
                 grid.Children.Add(textBlock1);
-                grid.Children.Add(textBlock2);
 
-                border.Name = "id_" + должности.ID_Должности;
+                border.Name = "id_" + отделы.ID_Отдела;
                 border.Child = grid;
 
                 ContextMenu contextMenu = new ContextMenu();
@@ -86,18 +66,18 @@ namespace EmployeeINC
                 Separator separator = new Separator();
                 Content.Children.Add(separator);
 
-                _должности.Add((border, separator, должности));
-                
+                Отделы.Add((border, separator, отделы));
+
                 menuItem.Click += (sender, e) =>
                 {
-                    DB.Database.Query($"DELETE FROM Должности WHERE ID_Должности = {должности.ID_Должности}");
+                    DB.Database.Query($"DELETE FROM Отделы WHERE ID_Отдела = {отделы.ID_Отдела}");
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);
                 };
                 menuItemEdit.Click += (sender, e) =>
                 {
-                    var редДолжности = new РедДолжности(должности);
-                    редДолжности.Show();
+                    var editEmployee = new AddDepartment(отделы);
+                    editEmployee.Show();
                     Close();
                 };
             }
@@ -129,8 +109,8 @@ namespace EmployeeINC
             excel.Visible = true;
             Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
             Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
-            List<string> headers = new List<string>() { "Наименование", "Ставка" };
-            for (int j = 0; j < 2; j++)
+            List<string> headers = new List<string>() { "Наименование" };
+            for (int j = 0; j < 6; j++)
             {
                 Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
@@ -138,20 +118,18 @@ namespace EmployeeINC
                 myRange.Value2 = headers[j];
             }
 
-            for (int i = 0; i < 2; i++)
+
+            for (int j = 0; j < Отделы.Count; j++)
             {
-                for (int j = 0; j < _должности.Count; j++)
-                {
-                    Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, i + 1];
-                    myRange.Value2 = i == 0 ? _должности[j].Item3.Наименование : _должности[j].Item3.Ставка.ToString();
-                }
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, 1];
+                myRange.Value2 = "Наименование";
             }
         }
 
-        private void dobav_click(object sender, RoutedEventArgs e)
+        private void AddDepartment(object sender, RoutedEventArgs e)
         {
-            AddWindoww m = new AddWindoww();
-            m.Show();
+            AddDepartment window = new AddDepartment();
+            window.Show();
             Close();
         }
 
