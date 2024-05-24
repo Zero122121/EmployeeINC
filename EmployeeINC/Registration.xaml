@@ -33,12 +33,12 @@
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="1" Grid.Column="0">
+                <StackPanel Grid.Column="0">
                     <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\login.png" Margin="30,10,0,10" Width="24" Height="29"/>
                     <Image Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\lock.png" Margin="30,15,0,10" Width="24" Height="29"/>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login"
+                <StackPanel Grid.Column="1">
+                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите логин (как в тг)" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="login"
                              Width="250"  Height="35" Margin="0,5" HorizontalAlignment="Left"/>
                     <TextBox GotFocus="RemovText" LostFocus="AdText" Text="Введите пароль" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="15" Foreground="Gray" BorderBrush="#22272d" FontFamily="Bahnschrift" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Parol"
                              Width="250"  Height="35" Margin="0,15" HorizontalAlignment="Left"/>

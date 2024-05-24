@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeINC" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        WindowStartupLocation ="CenterScreen"
+        WindowStartupLocation="CenterScreen"
         Title="Add" Height="256" Width="330" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
@@ -20,25 +20,27 @@
     <Border CornerRadius="18" Background="#1a1f25">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Foreground="White" Content="Отпуск" FontFamily="Bahnschrift" FontSize="28" Width="98" HorizontalAlignment="Center" Margin="0,0,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"
+            <Label Grid.Row="0" Foreground="White" Content="Отпуск" FontFamily="Bahnschrift" FontSize="28" Width="98"
+                   HorizontalAlignment="Center" Margin="0,0,0,5" />
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Grid.Row="2"
                     Height="36"
-                    Width="227"   Click="add_click" Content="Sign In"/>
+                    Width="227" Click="add_click" Content="Sign In" />
             <Grid Grid.Row="1">
-
-
-                <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="Bahnschrift" 
-          ItemsSource="{Binding}" SelectedValuePath="ID_Сотрудника" DisplayMemberPath="ID_Сотрудника" Width="193" Height="30" 
-          Background="#1a1f25" Margin="0,10"/>
-                    <DatePicker FontSize="15" Foreground="Gray" 
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateNach" Margin="10,10,0,0" Width="249" />
-                    <DatePicker FontSize="15" Foreground="Gray" 
-         BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25"  Name="DateCon" Margin="10,10,0,0" Width="249" />
+                <StackPanel Orientation="Vertical">
+                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
+                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" Width="193" Height="30"
+                              Background="#1a1f25" Margin="0,10" />
+                    <DatePicker FontSize="15" Foreground="Gray"
+                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateNach"
+                                Margin="10,10,0,0" Width="249" />
+                    <DatePicker FontSize="15" Foreground="Gray"
+                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateCon"
+                                Margin="10,10,0,0" Width="249" />
                 </StackPanel>
 
             </Grid>

@@ -22,11 +22,14 @@ namespace EmployeeINC
     {
         private Отпуски _employee;
         private bool _isEdit;
+        private Сотрудники[] _сотрудники = {};
 
         public Add(Отпуски отпуски = null)
         {
             InitializeComponent();
             bindcombo();
+            _сотрудники = (Сотрудники[])new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники;"));
+            ComboDol.ItemsSource = _сотрудники.Select(e=> $"{e.Фамилия} {e.Имя[0]}. {e.Отчество[0]}.");
             _employee = отпуски;
             if (отпуски != null)
             {
@@ -37,7 +40,7 @@ namespace EmployeeINC
 
         private void LoadData()
         {
-            ComboDol.Text = Convert.ToString(_employee.ID_Сотрудника);
+            ComboDol.SelectedItem = $"{_employee.Сотрудник.Фамилия} {_employee.Сотрудник.Имя[0]}. {_employee.Сотрудник.Отчество[0]}.";
             DateNach.SelectedDate = DateTime.Parse(_employee.Дата_начала);
             DateCon.SelectedDate = DateTime.Parse(_employee.Дата_завершения);
         }
@@ -46,7 +49,7 @@ namespace EmployeeINC
         {
             Отпуски сотрудники = new Отпуски
             {
-                ID_Сотрудника = Convert.ToInt32(ComboDol.Text),
+                ID_Сотрудника = _сотрудники.FirstOrDefault(сотрудник=> $"{сотрудник.Фамилия} {сотрудник.Имя[0]}. {сотрудник.Отчество[0]}." == ComboDol.SelectedItem.ToString()).ID_Сотрудника,
                 Дата_начала = DateNach.SelectedDate.ToString(),
                 Дата_завершения = DateCon.SelectedDate.ToString()
             };

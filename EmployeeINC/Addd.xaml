@@ -37,9 +37,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical">
                     <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
-                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
-                              ItemsSource="{Binding}" SelectedValuePath="ID_Сотрудника"
-                              DisplayMemberPath="ID_Сотрудника" Width="200" Height="30"
+                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" Width="200" Height="30"
                               Background="#1a1f25" Margin="0,10" />
                     <DatePicker FontSize="15" Foreground="Gray"
                                 BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateNach"

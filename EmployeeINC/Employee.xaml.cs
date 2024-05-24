@@ -42,8 +42,8 @@ namespace EmployeeINC
 
             array = array.Where(e => e.Имя.Contains(searchText) || e.Фамилия.Contains(searchText) ||
                                      e.Отчество.Contains(searchText) || e.Дата_начала_работы.Contains(searchText) ||
-                                     e.Телефон.Contains(searchText) || e.Дата_начала_работы.Contains(searchText))
-                .ToArray();
+                                     e.Телефон.Contains(searchText) || e.Дата_начала_работы.Contains(searchText) ||
+                                     e.tg_username.Contains(searchText)).ToArray();
 
             foreach (Сотрудники сотрудник in array)
             {
@@ -78,9 +78,10 @@ namespace EmployeeINC
                     $"{сотрудник.Отчество}",
                     $"{сотрудник.Должность.Наименование}",
                     $"{сотрудник.Телефон}",
-                    $"{сотрудник.Отдел.Name}"
+                    $"{сотрудник.Отдел.Name}",
+                    $"{сотрудник.tg_username}"
                 };
-                for (int i = 0; i < 6; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
@@ -117,7 +118,7 @@ namespace EmployeeINC
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);
                 };
-                menuItemEdit.Click += (sender, e) =>
+                menuItemEdit.Click += (_, _) =>
                 {
                     var editEmployee = new EditEmployee(сотрудник);
                     editEmployee.Show();
@@ -152,8 +153,8 @@ namespace EmployeeINC
             excel.Visible = true;
             Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
             Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
-            List<string> headers = new List<string>() { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел" };
-            for (int j = 0; j < 6; j++)
+            List<string> headers = new List<string>() { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел", "telegram nick" };
+            for (int j = 0; j < 7; j++)
             {
                 Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
@@ -161,7 +162,7 @@ namespace EmployeeINC
                 myRange.Value2 = headers[j];
             }
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < Сотрудники.Count; j++)
                 {
@@ -174,6 +175,7 @@ namespace EmployeeINC
                         3 => Сотрудники[j].Item3.Должность.Наименование,
                         4 => Сотрудники[j].Item3.Телефон,
                         5 => Сотрудники[j].Item3.Отдел.Name,
+                        6 => Сотрудники[j].Item3.tg_username,
                         _ => myRange.Value2
                     };
                 }

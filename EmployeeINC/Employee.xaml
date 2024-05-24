@@ -31,6 +31,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Фамилия" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                         <TextBlock Grid.Column="1" Text="Имя" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
@@ -38,6 +39,7 @@
                         <TextBlock Grid.Column="3" Text="Должность" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                         <TextBlock Grid.Column="4" Text="Телефон" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                         <TextBlock Grid.Column="5" Text="Отдел" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="6" Text="telegram" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />

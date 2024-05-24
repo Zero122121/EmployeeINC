@@ -24,7 +24,7 @@ namespace EmployeeINC.Database.Tables
             value.TryGetValue("ID_User", out var idObject);
             value.TryGetValue("Login", out var loginObject);
             value.TryGetValue("Password", out var passwordObject);
-            value.TryGetValue("Password", out var roleObject);
+            value.TryGetValue("role", out var roleObject);
             int id = int.Parse(idObject.ToString());
             string login = loginObject.ToString();
             string password = passwordObject.ToString();

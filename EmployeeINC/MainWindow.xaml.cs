@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using EmployeeINC.Database.Tables;
+using EmployeeINC.Telegram;
 
 namespace EmployeeINC
 {
@@ -11,6 +13,7 @@ namespace EmployeeINC
         public MainWindow()
         {
             DB.Database.Connect();
+            Task.Run(TelegramBot.Initialize);
             InitializeComponent();
         }
 

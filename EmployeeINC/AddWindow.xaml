@@ -59,6 +59,10 @@
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBox Text="telegram nick" HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="telegram"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left"
                               VerticalContentAlignment="Center" FontFamily="Bahnschrift"
                               Width="200" Height="30"

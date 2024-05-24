@@ -60,25 +60,24 @@ namespace EmployeeINC
                 Отчество = Otchestvo.Text,
                 Телефон = phone.Text,
                 Дата_начала_работы = DateStart.SelectedDate.ToString(),
+                tg_username = telegram.Text,
             };
             var отдел = DB.Database.ExecuteQuery($"SELECT * FROM Отделы WHERE Name = '{ComboOtdel.SelectedItem}'")
                 .FirstOrDefault();
             if (отдел != null && отдел.TryGetValue("ID_Отдела", out object отделObject))
             {
                 c.ID_Отдел = int.Parse(отделObject.ToString());
-                Console.WriteLine($"номер отдела: {отделObject}");
             }
             
             var должность = DB.Database.ExecuteQuery($"SELECT * FROM Должности WHERE Наименованиеи = '{ComboDol.SelectedItem}'").FirstOrDefault();
             if (должность != null && должность.TryGetValue("ID_Должности", out object должностьObject))
             {
                 c.ID_Должность = int.Parse(должностьObject.ToString());
-                Console.WriteLine($"номер должность: {должностьObject}");
             }
 
             DB.Database.Query(
-                $"INSERT INTO Сотрудники (Фамилия, Имя, Отчество, Телефон, Отдел, Должность, Дата_начала_работы) " +
-                $"VALUES ('{c.Фамилия}', '{c.Имя}', '{c.Отчество}', '{c.Телефон}', {c.ID_Отдел}, {c.ID_Должность}, '{c.Дата_начала_работы}')");
+                $"INSERT INTO Сотрудники (Фамилия, Имя, Отчество, Телефон, Отдел, Должность, Дата_начала_работы, tg_username) " +
+                $"VALUES ('{c.Фамилия}', '{c.Имя}', '{c.Отчество}', '{c.Телефон}', {c.ID_Отдел}, {c.ID_Должность}, '{c.Дата_начала_работы}', '{c.tg_username}')");
 
             MessageBox.Show("Сотрудник был добавлен в базу");
             Employee em = new Employee();

@@ -10,6 +10,7 @@ namespace EmployeeINC.Database.Tables
         public string Имя;
         public string Отчество;
         public string Телефон;
+        public string tg_username;
         public int ID_Отдел;
         public int ID_Должность;
         public string Дата_начала_работы;
@@ -21,13 +22,14 @@ namespace EmployeeINC.Database.Tables
             .ExecuteQuery($"SELECT * FROM Должности WHERE ID_Должности = {ID_Должность}").FirstOrDefault());
 
         public Сотрудники(int id, string фамилия, string имя, string отчество, string телефон, int idОтдел,
-            int idДолжность, string датаНачалаРаботы)
+            int idДолжность, string датаНачалаРаботы, string tgUsername)
         {
             ID_Сотрудника = id;
             Фамилия = фамилия;
             Имя = имя;
             Отчество = отчество;
             Телефон = телефон;
+            tg_username = tgUsername;
             ID_Отдел = idОтдел;
             ID_Должность = idДолжность;
             Дата_начала_работы = датаНачалаРаботы;
@@ -45,15 +47,17 @@ namespace EmployeeINC.Database.Tables
             value.TryGetValue("Отдел", out var отделObject);
             value.TryGetValue("Должность", out var должностьObject);
             value.TryGetValue("Дата_начала_работы", out var датаНачалаРаботыObject);
+            value.TryGetValue("tg_username", out var tg_usernameObject);
             int id = int.Parse(ID_СотрудникаObject.ToString());
             string фамилия = фамилияObject.ToString();
             string имя = имяObject.ToString();
             string отчество = отчествоObject.ToString();
             string телефон = телефонObject.ToString();
             string датаНачалаРаботы = датаНачалаРаботыObject.ToString();
+            string tg_username = tg_usernameObject.ToString();
             int idОтдел = int.Parse(отделObject.ToString());
             int idДолжность = int.Parse(должностьObject.ToString());
-            return new Сотрудники(id, фамилия, имя, отчество, телефон, idОтдел, idДолжность, датаНачалаРаботы);
+            return new Сотрудники(id, фамилия, имя, отчество, телефон, idОтдел, idДолжность, датаНачалаРаботы, tg_username);
         }
 
         public override Table[] ConvertToTables(List<Dictionary<string, object>> value)
