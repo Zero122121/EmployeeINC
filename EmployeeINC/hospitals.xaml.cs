@@ -45,6 +45,13 @@ namespace EmployeeINC
             {
                 Border border = new Border();
                 Grid grid = new Grid();
+                
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                
                 var list = new List<string>()
                 {
                     $"{больничные.Сотрудник.Фамилия} {больничные.Сотрудник.Имя[0]}.{больничные.Сотрудник.Отчество[0]}.",
@@ -55,7 +62,6 @@ namespace EmployeeINC
                 };
                 for (int i = 0; i < 5; i++)
                 {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                     TextBlock textBlock1 = new TextBlock
                     {
