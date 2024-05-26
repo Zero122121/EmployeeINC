@@ -23,6 +23,7 @@ namespace EmployeeINC
         public Menu()
         {
             InitializeComponent();
+            ValidateSettings(App.CurrentUser.role);
         }
 
         private void Employee_Click(object sender, RoutedEventArgs e)
@@ -63,6 +64,29 @@ namespace EmployeeINC
             Departments s = new Departments();
             s.Show();
             Close();
+        }
+
+        private void statistic_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeStats s = new EmployeeStats();
+            s.Show();
+            Close();
+        }
+
+        private void ValidateSettings(string role)
+        {
+            switch (role)
+            {
+                case "guest":
+                    СотрудникиButton.Visibility = Visibility.Visible;
+                    ОтпускиButton.Visibility = Visibility.Visible;
+                    БольничныеButton.Visibility = Visibility.Visible;
+                    ДолжностиButton.Visibility = Visibility.Visible;
+                    ОтделыButton.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

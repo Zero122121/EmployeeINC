@@ -6,23 +6,19 @@
         xmlns:local="clr-namespace:EmployeeINC"
         mc:Ignorable="d"
         WindowStartupLocation ="CenterScreen"
-        Title="Menu" Height="290" Width="615" ResizeMode="NoResize">
-    
+        Title="Menu" Height="300" Width="615" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical" Grid.Column="0" Background="#1a1f25">
-            <Button Style="{DynamicResource RoundButton}" Content="Сотрудники" Click="Employee_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Отпуски" Click="Vacations_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Больничные" Click="Hospitals_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Должности" Click="do_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            <Button Style="{DynamicResource RoundButton}" Content="Отделы" Click="departments_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
-            
-
-
-
+            <Button Name="СотрудникиButton" Style="{DynamicResource RoundButton}" Content="Сотрудники" Click="Employee_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Name="ОтпускиButton" Style="{DynamicResource RoundButton}" Content="Отпуски" Click="Vacations_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Name="БольничныеButton" Style="{DynamicResource RoundButton}" Content="Больничные" Click="Hospitals_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Name="ДолжностиButton" Style="{DynamicResource RoundButton}" Content="Должности" Click="do_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Name="ОтделыButton" Style="{DynamicResource RoundButton}" Content="Отделы" Click="departments_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
+            <Button Name="СтатистикаButton" Style="{DynamicResource RoundButton}" Content="Статистика" Click="statistic_Click" Height="30" Width="150" VerticalAlignment="Top" Margin="0,15,20,0"/>
         </StackPanel>
         <Image Grid.Column="1" Source="C:\Users\rsaet\source\repos\EmployeeINC\EmployeeINC\Resources\human.png" Margin="13,10,10,10"/>
     </Grid>

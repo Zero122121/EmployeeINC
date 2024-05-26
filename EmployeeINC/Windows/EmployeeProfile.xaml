@@ -1,12 +1,12 @@
-﻿<Window x:Class="EmployeeINC.AddWindow"
+﻿<Window x:Class="EmployeeINC.Windows.EmployeeProfile"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeeINC" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:EmployeeINC.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddWindow" Height="300" Width="500" ResizeMode="NoResize" WindowStyle="None"
+        Title="AddWindow" Height="450" Width="500" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -21,59 +21,72 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Foreground="White" Content="Сотрудник" FontFamily="Bahnschrift" FontSize="28"
                    Width="147" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Grid.Row="2" Height="36" Width="227" Click="add_click" Content="Сохранить" />
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Height="128" Width="128" BorderThickness="2" CornerRadius="7" BorderBrush="#22272B"
+                        Margin="25 0 0 10" HorizontalAlignment="Left">
+                    <Image Name="ProfileIcon" Source="../Resources/lock.png"/>
+                </Border>
+                <Button Grid.Column="1" Click="SelectPicture" Style="{StaticResource RoundButton}" Height="28" VerticalAlignment="Bottom" Margin="10 0 0 10">
+                    <TextBlock Text="Изменить" Margin="10 5" />
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <TextBox GotFocus="RemoveText" LostFocus="AddText" Text="Введите фамилию"
+                    <TextBox Text="Введите фамилию" IsReadOnly="True"
                              HorizontalContentAlignment="Left"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="LastName"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox GotFocus="RemoveText1" LostFocus="AddText1" Text="Введите имя"
+                    <TextBox Text="Введите имя" IsReadOnly="True"
                              HorizontalContentAlignment="Left"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Surname"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox GotFocus="RemoveText2" LostFocus="AddText2" Text="Введите отчество"
+                    <TextBox Text="Введите отчество" IsReadOnly="True"
                              HorizontalContentAlignment="Left"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Otchestvo"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <DatePicker FontSize="15" Foreground="Gray"
+                    <DatePicker FontSize="15" Foreground="Gray" IsManipulationEnabled="False"
                                 BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateStart"
                                 Margin="10,10,0,0" Width="227" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBox GotFocus="RemoveText3" LostFocus="AddText3" Text="Введите номер телефона"
+                    <TextBox Text="Введите номер телефона" IsReadOnly="True"
                              HorizontalContentAlignment="Left"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox GotFocus="RemoveText4" LostFocus="AddText4" Text="telegram nick" HorizontalContentAlignment="Left"
+                    <TextBox Text="telegram nick" HorizontalContentAlignment="Left" IsReadOnly="True"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="telegram"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left"
+                    <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left" IsReadOnly="True"
                               VerticalContentAlignment="Center" FontFamily="Bahnschrift"
                               Width="200" Height="30"
                               Background="#1a1f25" Margin="0,7" />
-                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
+                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" IsReadOnly="True"
                               VerticalContentAlignment="Center" FontFamily="Bahnschrift"
                               Width="200" Height="30"
                               Background="#1a1f25" Margin="0,7" />
                 </StackPanel>
-
             </Grid>
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Grid.Row="3" Height="36" Width="227" Click="SaveProfile" Content="Сохранить" />
         </Grid>
     </Border>
 </Window>

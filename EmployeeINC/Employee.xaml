@@ -44,18 +44,6 @@
                 </Border>
                 <Separator />
             </StackPanel>
-            
-            <!--<DataGrid FontSize="14" Background="White" FontFamily="Bahnschrift" x:Name="EmployeeGrid"
-                      AutoGenerateColumns="False" PreviewMouseRightButtonDown="EditEmployee">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Фамилия}" Header="Фамилия" Width="120" />
-                    <DataGridTextColumn Binding="{Binding Имя}" Header="Имя" Width="100" />
-                    <DataGridTextColumn Binding="{Binding Отчество}" Header="Отчество" Width="150" />
-                    <DataGridTextColumn Binding="{Binding Должность}" Header="Должность" Width="200" />
-                    <DataGridTextColumn Binding="{Binding Телефон}" Header="Телефон" Width="100" />
-                    <DataGridTextColumn Binding="{Binding Отдел}" Header="Отдел" Width="120" />
-                </DataGrid.Columns>
-            </DataGrid>-->
         </ScrollViewer>
         <StackPanel Grid.Column="1" Orientation="Vertical" Background="#1a1f25">
             <TextBox GotFocus="RemoveText" LostFocus="AddText" Background="#1a1f25" FontFamily="Bahnschrift"

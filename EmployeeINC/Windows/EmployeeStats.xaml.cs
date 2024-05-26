@@ -4,24 +4,18 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 using EmployeeINC.Database.Tables;
-using EmployeeINC.Windows;
 using Excel = Microsoft.Office.Interop.Excel;
 
-
-namespace EmployeeINC
+namespace EmployeeINC.Windows
 {
-    /// <summary>
-    /// Логика взаимодействия для Employee.xaml
-    /// </summary>
-    public partial class Employee : Window
+    public partial class EmployeeStats : Window
     {
-        public readonly List<(UIElement, UIElement, Сотрудники)> Сотрудники =
-            new List<(UIElement, UIElement, Сотрудники)>();
+        public readonly List<(UIElement, UIElement, Сотрудники сотрудник, Отпуски[] отпуски, Больничные[] больничные)> Сотрудники =
+            new List<(UIElement, UIElement, Сотрудники, Отпуски[], Больничные[])>();
 
-        public Employee()
+        public EmployeeStats()
         {
             InitializeComponent();
             ShowTable();
@@ -31,7 +25,7 @@ namespace EmployeeINC
         {
             for (int i = 1; i < Сотрудники.Count; i++)
             {
-                (UIElement, UIElement, Сотрудники) tuple = Сотрудники[i];
+                (UIElement, UIElement, Сотрудники, Отпуски[], Больничные[]) tuple = Сотрудники[i];
                 tuple.Item1 = null;
                 tuple.Item2 = null;
                 Сотрудники[i] = tuple;
@@ -47,31 +41,50 @@ namespace EmployeeINC
 
             foreach (Сотрудники сотрудник in array)
             {
+                var отпуски = (Отпуски[])new Отпуски().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT * FROM Отпуски WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}"));
+                
+                var больничные = (Больничные[])new Больничные().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT * FROM Больничные WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}"));
+                
                 Border border = new Border();
                 Grid grid = new Grid();
 
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(70, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(120, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(60, GridUnitType.Star) });
+                
+                
                 var list = new List<string>()
                 {
-                    $"{сотрудник.Фамилия}",
-                    $"{сотрудник.Имя}",
-                    $"{сотрудник.Отчество}",
-                    $"{сотрудник.Должность.Наименование}",
-                    $"{сотрудник.Телефон}",
                     $"{сотрудник.Отдел.Name}",
-                    $"{сотрудник.tg_username}"
+                    $"{сотрудник.Фамилия} {сотрудник.Имя[0]}. {сотрудник.Отчество[0]}.",
+                    $"{сотрудник.Должность.Наименование}",
+                    $"{отпуски.Length}",
+                    $"{больничные.Length}",
+                    $"{отпуски.Length + больничные.Length}"
                 };
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 6; i++)
                 {
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                    Console.WriteLine(i);
 
+                    Border borderBlock = new Border
+                    {
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(1, 0, 1, 2)
+                    };
                     TextBlock textBlock1 = new TextBlock
                     {
                         Text = list[i],
                         FontSize = 18,
                         FontFamily = new FontFamily("Bahnschrift")
                     };
-                    Grid.SetColumn(textBlock1, i);
-                    grid.Children.Add(textBlock1);
+                    Grid.SetColumn(borderBlock, i);
+                    grid.Children.Add(borderBlock);
+                    borderBlock.Child = textBlock1;
                 }
 
                 border.Name = "id_" + сотрудник.ID_Сотрудника;
@@ -91,7 +104,7 @@ namespace EmployeeINC
                 Separator separator = new Separator();
                 Content.Children.Add(separator);
 
-                Сотрудники.Add((border, separator, сотрудник));
+                Сотрудники.Add((border, separator, сотрудник, отпуски, больничные));
 
                 menuItem.Click += (sender, e) =>
                 {
@@ -136,12 +149,11 @@ namespace EmployeeINC
 
         private void export_click(object sender, RoutedEventArgs e)
         {
-            Excel.Application excel = new Excel.Application();
-            excel.Visible = true;
+            Excel.Application excel = new() { Visible = true };
             Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
             Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
-            List<string> headers = new List<string>() { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел", "telegram nick" };
-            for (int j = 0; j < 7; j++)
+            var headers = new List<string> { "Отдел", "ФИО", "Должность", "В отпуске", "На больничном", "Всего" };
+            for (int j = 0; j < 6; j++)
             {
                 Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
@@ -149,31 +161,23 @@ namespace EmployeeINC
                 myRange.Value2 = headers[j];
             }
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < Сотрудники.Count; j++)
                 {
                     Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, i + 1];
                     myRange.Value2 = i switch
                     {
-                        0 => Сотрудники[j].Item3.Фамилия,
-                        1 => Сотрудники[j].Item3.Имя,
-                        2 => Сотрудники[j].Item3.Отчество,
-                        3 => Сотрудники[j].Item3.Должность.Наименование,
-                        4 => Сотрудники[j].Item3.Телефон,
-                        5 => Сотрудники[j].Item3.Отдел.Name,
-                        6 => Сотрудники[j].Item3.tg_username,
+                        0 => Сотрудники[j].Item3.Отдел.Name,
+                        1 => $"{Сотрудники[j].Item3.Фамилия} {Сотрудники[j].Item3.Имя[0]}. {Сотрудники[j].Item3.Отчество[0]}.",
+                        2 => Сотрудники[j].Item3.Должность.Наименование,
+                        3 => Сотрудники[j].отпуски.Length,
+                        4 => Сотрудники[j].больничные.Length,
+                        5 => Сотрудники[j].больничные.Length + Сотрудники[j].отпуски.Length,
                         _ => myRange.Value2
                     };
                 }
             }
-        }
-
-        private void dobav_click(object sender, RoutedEventArgs e)
-        {
-            AddWindow m = new AddWindow();
-            m.Show();
-            Close();
         }
 
         private void back_click(object sender, RoutedEventArgs e)

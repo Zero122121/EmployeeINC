@@ -19,16 +19,17 @@ namespace EmployeeINC
     {
         private Сотрудники _employee;
 
+        private bool _isEdit = false;
+
         public AddWindow(Сотрудники сотрудники = null)
         {
             InitializeComponent();
-            var отделы = 
-                (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
+            _isEdit = сотрудники != null;
+            var отделы = (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
             ComboOtdel.ItemsSource = отделы.Select(e => e.Name);
             if(отделы.Length != 0) ComboOtdel.SelectedItem = отделы[0].Name;
             
-            var должности =
-                (Должности[])new Должности().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Должности"));
+            var должности = (Должности[])new Должности().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Должности"));
 
             ComboDol.ItemsSource = должности.Select(e => e.Наименование);
             if(должности.Length != 0) ComboDol.SelectedItem = должности[0].Наименование;
@@ -46,7 +47,8 @@ namespace EmployeeINC
             LastName.Text = _employee.Фамилия;
             Surname.Text = _employee.Имя;
             Otchestvo.Text = _employee.Отчество;
-            phone.Text = Convert.ToString(_employee.Телефон);
+            phone.Text = _employee.Телефон;
+            DateStart.Text = _employee.Дата_начала_работы;
             ComboOtdel.Text = _employee.Отдел == null ? "" : _employee.Отдел.Name;
             ComboDol.Text = _employee.Должность == null ? "" : _employee.Должность.Наименование;
         }
@@ -55,6 +57,7 @@ namespace EmployeeINC
         {
             Сотрудники c = new Сотрудники
             {
+                ID_Сотрудника = _employee?.ID_Сотрудника ?? -1,
                 Фамилия = LastName.Text,
                 Имя = Surname.Text,
                 Отчество = Otchestvo.Text,
@@ -75,9 +78,20 @@ namespace EmployeeINC
                 c.ID_Должность = int.Parse(должностьObject.ToString());
             }
 
-            DB.Database.Query(
-                $"INSERT INTO Сотрудники (Фамилия, Имя, Отчество, Телефон, Отдел, Должность, Дата_начала_работы, tg_username) " +
-                $"VALUES ('{c.Фамилия}', '{c.Имя}', '{c.Отчество}', '{c.Телефон}', {c.ID_Отдел}, {c.ID_Должность}, '{c.Дата_начала_работы}', '{c.tg_username}')");
+            if (_isEdit)
+            {
+                DB.Database.Query(
+                    $"UPDATE Сотрудники SET Фамилия = '{c.Фамилия}', Имя = '{c.Имя}', Отчество = '{c.Отчество}', " +
+                    $"Телефон = '{c.Телефон}', Отдел = {c.ID_Отдел}, Должность =  {c.ID_Должность}, " +
+                    $"Дата_начала_работы = '{c.Дата_начала_работы}', tg_username = '{c.tg_username}'" +
+                    $"WHERE ID_Сотрудника = {c.ID_Сотрудника}");
+            }
+            else
+            {
+                DB.Database.Query(
+                    $"INSERT INTO Сотрудники (Фамилия, Имя, Отчество, Телефон, Отдел, Должность, Дата_начала_работы, tg_username) " +
+                    $"VALUES ('{c.Фамилия}', '{c.Имя}', '{c.Отчество}', '{c.Телефон}', {c.ID_Отдел}, {c.ID_Должность}, '{c.Дата_начала_работы}', '{c.tg_username}')");
+            }
 
             MessageBox.Show("Сотрудник был добавлен в базу");
             Employee em = new Employee();
@@ -164,6 +178,24 @@ namespace EmployeeINC
             {
                 phone.Text = "Введите номер телефона";
                 phone.Foreground = Brushes.Gray;
+            }
+        }
+
+        private void RemoveText4(object sender, RoutedEventArgs e)
+        {
+            if (telegram.Text == "Введите номер телефона")
+            {
+                telegram.Text = "";
+                telegram.Foreground = Brushes.White;
+            }
+        }
+
+        private void AddText4(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(telegram.Text))
+            {
+                telegram.Text = "Введите номер телефона";
+                telegram.Foreground = Brushes.Gray;
             }
         }
     }

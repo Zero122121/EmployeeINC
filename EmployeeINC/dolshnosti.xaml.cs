@@ -51,7 +51,6 @@ namespace EmployeeINC
                 Border border = new Border();
                 Grid grid = new Grid();
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 TextBlock textBlock1 = new TextBlock
                 {

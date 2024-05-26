@@ -57,10 +57,7 @@ namespace EmployeeINC.Telegram
 
                 var chatId = message.Chat.Id;
 
-                //Console.WriteLine($"Received a '{messageText}' message in chat {chatId}. {message.Chat.Username}");
-
                 // Эхо получило текст сообщения
-
                 Console.WriteLine(GetAnswer(messageText, message.Chat.Username));
                 
                 Message sentMessage = await botClient.SendTextMessageAsync(
@@ -113,8 +110,7 @@ namespace EmployeeINC.Telegram
                     return $"Список:\n{список}\n";
                 case "Отпускные дни":
                     // Установка начальной даты для отсчета
-                    var startDate = DateTime.ParseExact(сотрудник.Дата_начала_работы, "dd.MM.yyyy H:mm:ss", null);
-                    Console.WriteLine(startDate);
+                    DateTime startDate = DateTime.ParseExact(сотрудник.Дата_начала_работы, "dd.MM.yyyy H:mm:ss", null);
                     DateTime referenceDate = startDate < new DateTime(startDate.Year, 1, 1) ? new DateTime(startDate.Year, 1, 1) : startDate;
 
                     // Расчет общего количества рабочих дней между начальной датой и текущей датой, исключая выходные

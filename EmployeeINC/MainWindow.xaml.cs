@@ -45,6 +45,7 @@ namespace EmployeeINC
                 .FirstOrDefault();
             if (user != null)
             {
+                App.CurrentUser = user;
                 TransitionWindowToMain();
             }
         }
