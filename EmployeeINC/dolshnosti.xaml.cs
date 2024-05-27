@@ -91,6 +91,14 @@ namespace EmployeeINC
                 
                 menuItem.Click += (sender, e) =>
                 {
+                    var сотрудниковВДолжности = new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery(
+                        $"SELECT * FROM Сотрудники WHERE Должность = {должности.ID_Должности}")).Length;
+                    if (сотрудниковВДолжности > 0)
+                    {
+                        MessageBox.Show($"Количество сотрудников с этой должностью {сотрудниковВДолжности}. " +
+                                        $"Измените их должность и попробуйте снова!");
+                        return;
+                    }
                     DB.Database.Query($"DELETE FROM Должности WHERE ID_Должности = {должности.ID_Должности}");
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);

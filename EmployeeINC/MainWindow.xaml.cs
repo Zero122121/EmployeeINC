@@ -35,6 +35,9 @@ namespace EmployeeINC
             }
 
             DB.Database.ExecuteQuery($"INSERT INTO User (Login, Password, role) VALUES ('{login.Text}', '{Parol.Text}', 'guest')");
+            user = (User)new User().ConvertToTables(DB.Database.ExecuteQuery(
+                $"SELECT * FROM User WHERE Login = '{login.Text}'")).FirstOrDefault();
+            App.CurrentUser = user;
             TransitionWindowToMain();
         }
 

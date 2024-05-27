@@ -49,7 +49,7 @@ namespace EmployeeINC
                 {
                     $"{отпуски.Дата_начала}",
                     $"{отпуски.Дата_завершения}",
-                    $"{отпуски.Сотрудник.Имя + отпуски.Сотрудник.Фамилия[0] + отпуски.Сотрудник.Отчество[0]}",
+                    $"{отпуски.Сотрудник.Имя} {отпуски.Сотрудник.Фамилия[0]}. {отпуски.Сотрудник.Отчество[0]}."
                 };
                 for (int i = 0; i < 3; i++)
                 {
@@ -84,7 +84,7 @@ namespace EmployeeINC
 
                 menuItem.Click += (sender, e) =>
                 {
-                    DB.Database.Query($"DELETE FROM Сотрудники WHERE ID_Сотрудника = {отпуски.ID_Сотрудника}");
+                    DB.Database.Query($"DELETE FROM Отпуски WHERE ID_Сотрудника = {отпуски.ID_Сотрудника}");
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);
                 };
@@ -120,7 +120,7 @@ namespace EmployeeINC
                     Excel.Range myRange = (Excel.Range)sheet1.Cells[j + 2, i + 1];
                     myRange.Value2 = i switch
                     {
-                        0 => (Отпуски[j].Item3.Сотрудник.Фамилия + Отпуски[j].Item3.Сотрудник.Имя + Отпуски[j].Item3.Сотрудник.Отчество),
+                        0 => $"{Отпуски[j].Item3.Сотрудник.Фамилия} {Отпуски[j].Item3.Сотрудник.Имя[0]}. {Отпуски[j].Item3.Сотрудник.Отчество[0]}.",
                         1 => Отпуски[j].Item3.Дата_начала,
                         2 => Отпуски[j].Item3.Дата_завершения,
                         _ => myRange.Value2

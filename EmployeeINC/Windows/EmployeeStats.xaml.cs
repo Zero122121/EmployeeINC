@@ -90,14 +90,14 @@ namespace EmployeeINC.Windows
                 border.Name = "id_" + сотрудник.ID_Сотрудника;
                 border.Child = grid;
 
-                ContextMenu contextMenu = new ContextMenu();
+                /*ContextMenu contextMenu = new ContextMenu();
                 MenuItem menuItemProfile = new MenuItem() { Header = "Профиль" };
                 contextMenu.Items.Add(menuItemProfile);
                 MenuItem menuItemEdit = new MenuItem() { Header = "Редактировать" };
                 contextMenu.Items.Add(menuItemEdit);
                 MenuItem menuItem = new MenuItem() { Header = "Удалить" };
                 contextMenu.Items.Add(menuItem);
-                border.ContextMenu = contextMenu;
+                border.ContextMenu = contextMenu;*/
 
                 Content.Children.Add(border);
 
@@ -106,7 +106,7 @@ namespace EmployeeINC.Windows
 
                 Сотрудники.Add((border, separator, сотрудник, отпуски, больничные));
 
-                menuItem.Click += (sender, e) =>
+                /*menuItem.Click += (sender, e) =>
                 {
                     DB.Database.Query($"DELETE FROM Сотрудники WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     Content.Children.Remove(border);
@@ -123,7 +123,7 @@ namespace EmployeeINC.Windows
                     var editEmployee = new EmployeeProfile(сотрудник);
                     editEmployee.Show();
                     Close();
-                };
+                };*/
             }
         }
 

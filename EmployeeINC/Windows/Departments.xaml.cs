@@ -70,6 +70,14 @@ namespace EmployeeINC.Windows
 
                 menuItem.Click += (sender, e) =>
                 {
+                    var сотрудниковВОтделе = new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery(
+                        $"SELECT * FROM Сотрудники WHERE Отдел = {отделы.ID_Отдела}")).Length;
+                    if (сотрудниковВОтделе > 0)
+                    {
+                        MessageBox.Show($"Количество сотрудников с этим отделом {сотрудниковВОтделе}. " +
+                                        $"Измените их отдел и попробуйте снова!");
+                        return;
+                    }
                     DB.Database.Query($"DELETE FROM Отделы WHERE ID_Отдела = {отделы.ID_Отдела}");
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);

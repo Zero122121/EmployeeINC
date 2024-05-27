@@ -95,6 +95,9 @@ namespace EmployeeINC
 
                 menuItem.Click += (sender, e) =>
                 {
+                    DB.Database.Query($"DELETE FROM Отпуски WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
+                    DB.Database.Query($"DELETE FROM Больничные WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
+                    
                     DB.Database.Query($"DELETE FROM Сотрудники WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     Content.Children.Remove(border);
                     Content.Children.Remove(separator);
@@ -140,7 +143,8 @@ namespace EmployeeINC
             excel.Visible = true;
             Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
             Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
-            List<string> headers = new List<string>() { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел", "telegram nick" };
+            List<string> headers = new List<string>()
+                { "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Отдел", "telegram nick" };
             for (int j = 0; j < 7; j++)
             {
                 Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
