@@ -15,11 +15,12 @@ namespace EmployeeINC.Telegram
     {
         private static TelegramBotClient _botClient;
 
-        private const string TOKEN = @"7078157731:AAE-28Tkzbb61yyBBveNk8xRIv7G1A1ShnU";
+        //private const string TOKEN = @"7078157731:AAE-28Tkzbb61yyBBveNk8xRIv7G1A1ShnU";
+        private const string TOKEN = @"7114919697:AAF-g6fRUANqexBnSBgYk60orXGLc9Lro-c";
 
         public static async Task Initialize()
         {
-            _botClient = new TelegramBotClient($"{TOKEN}");
+            _botClient = new TelegramBotClient(TOKEN);
 
             using CancellationTokenSource cts = new();
 
@@ -36,7 +37,7 @@ namespace EmployeeINC.Telegram
                 cancellationToken: cts.Token
             );
 
-            var me = await _botClient.GetMeAsync(cancellationToken: cts.Token);
+            var me = await _botClient.GetMeAsync();
 
             Console.WriteLine($"Start listening for @{me.Username}");
             Console.ReadLine();
@@ -48,22 +49,28 @@ namespace EmployeeINC.Telegram
                 CancellationToken cancellationToken)
             {
                 // Обрабатывать только обновления сообщений: https://core.telegram.org/bots/api#message
+                Console.WriteLine("1)");
+
                 if (update.Message is not { } message)
                     return;
+                Console.WriteLine("2)");
                 // Обрабатывать только текстовые сообщения
                 if (message.Text is not { } messageText)
                     return;
 
 
+                Console.WriteLine("3)");
                 var chatId = message.Chat.Id;
 
                 // Эхо получило текст сообщения
                 Console.WriteLine(GetAnswer(messageText, message.Chat.Username));
-                
+
+                Console.WriteLine("4)");
                 Message sentMessage = await botClient.SendTextMessageAsync(
                     chatId: chatId,
                     text: GetAnswer(messageText, message.Chat.Username),
                     cancellationToken: cancellationToken);
+                Console.WriteLine("5)");
             }
 
             Task HandlePollingErrorAsync(ITelegramBotClient botClient, Exception exception,
@@ -83,6 +90,7 @@ namespace EmployeeINC.Telegram
 
         private static string GetAnswer(string message, string login)
         {
+            Console.WriteLine("1234");
             Сотрудники сотрудник = (Сотрудники)new Сотрудники()
                 .ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники WHERE tg_username = '{login}'"))
                 .FirstOrDefault();

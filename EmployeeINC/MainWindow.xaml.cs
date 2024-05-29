@@ -13,7 +13,7 @@ namespace EmployeeINC
         public MainWindow()
         {
             DB.Database.Connect();
-            Task.Run(TelegramBot.Initialize);
+            //Task.Run(TelegramBot.Initialize().Wait);
             InitializeComponent();
         }
 

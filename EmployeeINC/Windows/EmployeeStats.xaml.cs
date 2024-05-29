@@ -32,7 +32,7 @@ namespace EmployeeINC.Windows
             }
 
             var array = (Сотрудники[])new Сотрудники().ConvertToTables(
-                DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники"));
+                DB.Database.ExecuteQuery($"SELECT DISTINCT * FROM Сотрудники"));
 
             array = array.Where(e => e.Имя.Contains(searchText) || e.Фамилия.Contains(searchText) ||
                                      e.Отчество.Contains(searchText) || e.Дата_начала_работы.Contains(searchText) ||

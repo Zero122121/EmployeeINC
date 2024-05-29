@@ -42,7 +42,7 @@ namespace EmployeeINC
             }
 
             var array = (Должности[])new Должности().ConvertToTables(
-                DB.Database.ExecuteQuery($"SELECT * FROM Должности"));
+                DB.Database.ExecuteQuery($"SELECT DISTINCT * FROM Должности"));
 
             array = array.Where(e => e.Наименование.Contains(searchText)).ToArray();
 
@@ -92,7 +92,7 @@ namespace EmployeeINC
                 menuItem.Click += (sender, e) =>
                 {
                     var сотрудниковВДолжности = new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery(
-                        $"SELECT * FROM Сотрудники WHERE Должность = {должности.ID_Должности}")).Length;
+                        $"SELECT DISTINCT * FROM Сотрудники WHERE Должность = {должности.ID_Должности}")).Length;
                     if (сотрудниковВДолжности > 0)
                     {
                         MessageBox.Show($"Количество сотрудников с этой должностью {сотрудниковВДолжности}. " +

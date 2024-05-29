@@ -24,10 +24,10 @@ namespace EmployeeINC.Database.Tables
         public BitmapImage pictureBitmap;
         
         public Отделы Отдел => (Отделы)new Отделы().ConvertToTable(DB.Database
-            .ExecuteQuery($"SELECT * FROM Отделы WHERE ID_Отдела = {ID_Отдел}").FirstOrDefault());
+            .ExecuteQuery($"SELECT DISTINCT * FROM Отделы WHERE ID_Отдела = {ID_Отдел}").FirstOrDefault());
 
         public Должности Должность => (Должности)new Должности().ConvertToTable(DB.Database
-            .ExecuteQuery($"SELECT * FROM Должности WHERE ID_Должности = {ID_Должность}").FirstOrDefault());
+            .ExecuteQuery($"SELECT DISTINCT * FROM Должности WHERE ID_Должности = {ID_Должность}").FirstOrDefault());
 
         public Сотрудники(int id, string фамилия, string имя, string отчество, string телефон, int idОтдел,
             int idДолжность, string датаНачалаРаботы, string tgUsername, byte[] pictureBytes)

@@ -35,7 +35,7 @@ namespace EmployeeINC
             }
 
             var array = (Отпуски[])new Отпуски().ConvertToTables(
-                DB.Database.ExecuteQuery($"SELECT * FROM Отпуски"));
+                DB.Database.ExecuteQuery($"SELECT DISTINCT * FROM Отпуски"));
 
             array = array.Where(e => e.Дата_начала.Contains(searchText) || e.Дата_завершения.Contains(searchText) ||
                                      (e.Сотрудник.Фамилия + e.Сотрудник.Имя + e.Сотрудник.Отчество)

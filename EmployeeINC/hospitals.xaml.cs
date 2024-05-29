@@ -34,7 +34,7 @@ namespace EmployeeINC
             }
 
             var array = (Больничные[])new Больничные().ConvertToTables(
-                DB.Database.ExecuteQuery($"SELECT * FROM Больничные"));
+                DB.Database.ExecuteQuery($"SELECT DISTINCT * FROM Больничные"));
 
             array = array.Where(e => e.Сотрудник.Фамилия.Contains(searchText) ||e.Сотрудник.Фамилия.Contains(searchText) ||
                                      e.Сотрудник.Отчество.Contains(searchText) || e.Диагноз.Contains(searchText) ||

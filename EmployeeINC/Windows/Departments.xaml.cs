@@ -31,7 +31,7 @@ namespace EmployeeINC.Windows
                 Отделы[i] = tuple;
             }
 
-            var array = (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM Отделы"));
+            var array = (Отделы[])new Отделы().ConvertToTables(DB.Database.ExecuteQuery($"SELECT DISTINCT * FROM Отделы"));
 
             array = array.Where(e => e.Name.Contains(searchText)).ToArray();
 

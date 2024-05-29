@@ -7,8 +7,8 @@ namespace DB
     {
         private static readonly SQLiteConnection Connection = new SQLiteConnection(CONNECTION_STRING);
 
-        // private const string CONNECTION_STRING = @"Data Source=C:\Kimicu\Programming\DesktopApps\KimicuHelper\KimicuHelper\Databases\project_database;Version=3;";
-        private const string CONNECTION_STRING = @"Data Source=|DataDirectory|\Database\database;";
+        private const string CONNECTION_STRING = @"Data Source=C:\Kimicu\Programming\DesktopApps\EmployeeINC\EmployeeINC\Database\database;Version=3;";
+        // private const string CONNECTION_STRING = @"Data Source=|DataDirectory|\Database\database;";
     
         public static void Connect() => Connection.Open();
         public static void Disconnect() => Connection.Close();
