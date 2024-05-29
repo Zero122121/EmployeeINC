@@ -26,13 +26,15 @@
                 <Border>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Начало" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="1" Text="Конец" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="2" Text="ФИО Сотрудника" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="0" Text="Вид Отпуска" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="1" Text="ФИО Сотрудника" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="2" Text="Начало" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="3" Text="Конец" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />

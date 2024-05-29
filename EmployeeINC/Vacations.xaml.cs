@@ -47,9 +47,10 @@ namespace EmployeeINC
                 Grid grid = new Grid();
                 var list = new List<string>()
                 {
+                    $"{отпуски.Сотрудник.Имя} {отпуски.Сотрудник.Фамилия[0]}. {отпуски.Сотрудник.Отчество[0]}.",
+                    $"{отпуски.Вид_отпуска}",
                     $"{отпуски.Дата_начала}",
                     $"{отпуски.Дата_завершения}",
-                    $"{отпуски.Сотрудник.Имя} {отпуски.Сотрудник.Фамилия[0]}. {отпуски.Сотрудник.Отчество[0]}."
                 };
                 for (int i = 0; i < 3; i++)
                 {
@@ -59,7 +60,8 @@ namespace EmployeeINC
                     {
                         Text = list[i],
                         FontSize = 18,
-                        FontFamily = new FontFamily("Bahnschrift")
+                        FontFamily = new FontFamily("Bahnschrift"),
+                        TextTrimming = TextTrimming.CharacterEllipsis
                     };
                     Grid.SetColumn(textBlock1, i);
                     grid.Children.Add(textBlock1);
@@ -99,13 +101,15 @@ namespace EmployeeINC
 
         private void export_click(object sender, RoutedEventArgs e)
         {
-            Excel.Application excel = new Excel.Application();
-            excel.Visible = true;
+            Excel.Application excel = new()
+            {
+                Visible = true
+            };
             Excel.Workbook workbook = excel.Workbooks.Add(Missing.Value);
             Excel.Worksheet sheet1 = (Excel.Worksheet)workbook.Sheets[1];
-            List<string> headers = new List<string>() { "ФИО", "Начало", "Конец" };
+            var headers = new List<string>() { "ФИО", "Вид отпуска", "Начало", "Конец" };
 
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 4; j++)
             {
                 Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
                 sheet1.Cells[1, j + 1].Font.Bold = true;
@@ -113,7 +117,7 @@ namespace EmployeeINC
                 myRange.Value2 = headers[j];
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < Отпуски.Count; j++)
                 {
@@ -121,8 +125,9 @@ namespace EmployeeINC
                     myRange.Value2 = i switch
                     {
                         0 => $"{Отпуски[j].Item3.Сотрудник.Фамилия} {Отпуски[j].Item3.Сотрудник.Имя[0]}. {Отпуски[j].Item3.Сотрудник.Отчество[0]}.",
-                        1 => Отпуски[j].Item3.Дата_начала,
-                        2 => Отпуски[j].Item3.Дата_завершения,
+                        1 => Отпуски[j].Item3.Вид_отпуска,
+                        2 => Отпуски[j].Item3.Дата_начала,
+                        3 => Отпуски[j].Item3.Дата_завершения,
                         _ => myRange.Value2
                     };
                 }
