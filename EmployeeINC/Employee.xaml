@@ -33,13 +33,13 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Фамилия" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="1" Text="Имя" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="2" Text="Отчество" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="3" Text="Должность" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="4" Text="Телефон" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="5" Text="Отдел" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="6" Text="telegram" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="0" TextTrimming="CharacterEllipsis" Text="Фамилия" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="1" TextTrimming="CharacterEllipsis" Text="Имя" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="2" TextTrimming="CharacterEllipsis" Text="Отчество" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="3" TextTrimming="CharacterEllipsis" Text="Должность" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="4" TextTrimming="CharacterEllipsis" Text="Телефон" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="5" TextTrimming="CharacterEllipsis" Text="Отдел" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="6" TextTrimming="CharacterEllipsis" Text="telegram" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />

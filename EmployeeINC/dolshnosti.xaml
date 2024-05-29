@@ -27,23 +27,17 @@
                 <Border>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Наименование" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
-                        <TextBlock Grid.Column="1" Text="Ставка" FontWeight="Bold" FontSize="18"
-                                   FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="1" Text="Ставка" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="2" Text="Сотрудников" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />
             </StackPanel>
-            <!--<DataGrid FontSize="14" Background="White" FontFamily="Bahnschrift" x:Name="EmployeeGrid"
-                      AutoGenerateColumns="False" Foreground="Black" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Наименование}" Header="Наименование" Width="2*" />
-                    <DataGridTextColumn Binding="{Binding Ставка}" Header="Ставка" Width="*" />
-                </DataGrid.Columns>
-            </DataGrid>-->
         </ScrollViewer>
 
         <StackPanel Grid.Column="1" Orientation="Vertical" Background="#1a1f25">

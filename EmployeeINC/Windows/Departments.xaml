@@ -27,8 +27,10 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Наименование" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
+                        <TextBlock Grid.Column="1" Text="Сотрудников" FontWeight="Bold" FontSize="18" FontFamily="Bahnschrift" />
                     </Grid>
                 </Border>
                 <Separator />

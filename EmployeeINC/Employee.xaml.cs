@@ -68,7 +68,8 @@ namespace EmployeeINC
                     {
                         Text = list[i],
                         FontSize = 18,
-                        FontFamily = new FontFamily("Bahnschrift")
+                        FontFamily = new FontFamily("Bahnschrift"),
+                        TextTrimming = TextTrimming.CharacterEllipsis
                     };
                     Grid.SetColumn(textBlock1, i);
                     grid.Children.Add(textBlock1);
@@ -95,6 +96,7 @@ namespace EmployeeINC
 
                 menuItem.Click += (sender, e) =>
                 {
+                    DB.Database.Query($"DELETE FROM document WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     DB.Database.Query($"DELETE FROM Отпуски WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     DB.Database.Query($"DELETE FROM Больничные WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     
@@ -110,7 +112,10 @@ namespace EmployeeINC
                 };
                 menuItemProfile.Click += (_, _) =>
                 {
-                    var editEmployee = new EmployeeProfile(сотрудник);
+                    var docs = (Document[])new Document().ConvertToTables(
+                        DB.Database.ExecuteQuery($"SELECT * FROM document WHERE employee_id = {сотрудник.ID_Сотрудника}")
+                        );
+                    var editEmployee = new EmployeeProfile(сотрудник, docs);
                     editEmployee.Show();
                     Close();
                 };

@@ -21,10 +21,12 @@ namespace EmployeeINC
     public partial class AddWindoww : Window
     {
         private Должности _employee = null;
+        private bool _isEdit = false;
 
         public AddWindoww(Должности сотрудники = null)
         {
             InitializeComponent();
+            _isEdit = сотрудники != null;
             if (сотрудники != null)
             {
                 LoadData();
@@ -81,8 +83,9 @@ namespace EmployeeINC
                 Наименование = LastName.Text,
                 Ставка = Convert.ToInt32(Surname.Text)
             };
-
-            DB.Database.Query($"INSERT INTO Должности (Наименованиеи, Ставка) VALUES ('{д.Наименование}', {д.Ставка})");
+            DB.Database.Query(_isEdit
+                ? $"UPDATE Должности SET Наименованиеи = '{д.Наименование}', Ставка = {д.Ставка} WHERE {_employee.ID_Должности}"
+                : $"INSERT INTO Должности (Наименованиеи, Ставка) VALUES ('{д.Наименование}', {д.Ставка})");
 
             MessageBox.Show("Должность была добавлен в базу");
             dolshnosti em = new dolshnosti();

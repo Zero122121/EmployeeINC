@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:EmployeeINC.Windows"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddWindow" Height="450" Width="500" ResizeMode="NoResize" WindowStyle="None"
+        Title="AddWindow" Height="700" Width="750" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -22,6 +21,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
@@ -29,15 +29,23 @@
                    Width="147" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Height="128" Width="128" BorderThickness="2" CornerRadius="7" BorderBrush="#22272B"
+                <Border Grid.Column="0" Height="128" Width="128" BorderThickness="2" CornerRadius="7"
+                        BorderBrush="#22272B"
                         Margin="25 0 0 10" HorizontalAlignment="Left">
-                    <Image Name="ProfileIcon" Source="../Resources/lock.png"/>
+                    <Image Name="ProfileIcon" Source="../Resources/lock.png" />
                 </Border>
-                <Button Grid.Column="1" Click="SelectPicture" Style="{StaticResource RoundButton}" Height="28" VerticalAlignment="Bottom" Margin="10 0 0 10">
+                <Button Grid.Column="1" Click="SelectPicture" Style="{StaticResource RoundButton}" Height="28"
+                        VerticalAlignment="Bottom" Margin="10 0 0 10">
                     <TextBlock Text="Изменить" Margin="10 5" />
+                </Button>
+                <Button Grid.Column="2" Click="AddDocument" Style="{StaticResource RoundButton}" Height="28"
+                        VerticalAlignment="Bottom" Margin="10 0 0 10">
+                    <TextBlock Text="Добавить документ" Margin="10 5" />
                 </Button>
             </Grid>
             <Grid Grid.Row="2">
@@ -46,47 +54,33 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Vertical">
-                    <TextBox Text="Введите фамилию" IsReadOnly="True"
-                             HorizontalContentAlignment="Left"
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="LastName"
-                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox Text="Введите имя" IsReadOnly="True"
-                             HorizontalContentAlignment="Left"
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Surname"
-                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox Text="Введите отчество" IsReadOnly="True"
-                             HorizontalContentAlignment="Left"
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Otchestvo"
-                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <DatePicker FontSize="15" Foreground="Gray" IsManipulationEnabled="False"
-                                BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="DateStart"
-                                Margin="10,10,0,0" Width="227" />
+                    <TextBlock Text="Введите фамилию" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Background="#1a1f25" Name="LastName" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Имя:" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Background="#1a1f25" Name="Surname" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Отчество:" Height="20" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Background="#1a1f25" Name="Otchestvo" Width="350" Margin="0,5" />
+                    <TextBlock Text="Дата начала:" Name="DateStart" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Место жительства:" Name="Живет" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Дата рождение:" Name="ДатаРождение" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Гражданство:" Name="Гражданство" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Образование:" Name="Образование" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
-                    <TextBox Text="Введите номер телефона" IsReadOnly="True"
-                             HorizontalContentAlignment="Left"
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
-                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox Text="telegram nick" HorizontalContentAlignment="Left" IsReadOnly="True"
-                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
-                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="telegram"
-                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <ComboBox Name="ComboOtdel" FontSize="15" HorizontalContentAlignment="Left" IsReadOnly="True"
-                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
-                              Width="200" Height="30"
-                              Background="#1a1f25" Margin="0,7" />
-                    <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left" IsReadOnly="True"
-                              VerticalContentAlignment="Center" FontFamily="Bahnschrift"
-                              Width="200" Height="30"
-                              Background="#1a1f25" Margin="0,7" />
+                    <TextBlock Text="Введите номер телефона" Name="phone" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="telegram nick" Name="telegram" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Отдел: " Name="ComboOtdel" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Должность: " Name="ComboDol" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Серия: " Name="Серия" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Номер: " Name="Номер" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Адерс: " Name="Адрес" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
+                    <TextBlock Text="Семейное положение: " Name="СемейноеПоложение" FontFamily="Bahnschrift" FontSize="15" Foreground="White" Width="350" Height="20" Margin="0,5" />
                 </StackPanel>
             </Grid>
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Grid.Row="3" Height="36" Width="227" Click="SaveProfile" Content="Сохранить" />
+            <Grid Grid.Row="3">
+                <ScrollViewer>
+                    <StackPanel Name="DocsContent">
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Height="36" Width="227" Click="SaveProfile" Content="Сохранить" />
         </Grid>
     </Border>
 </Window>

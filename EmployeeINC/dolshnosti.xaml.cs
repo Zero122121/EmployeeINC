@@ -50,7 +50,8 @@ namespace EmployeeINC
             {
                 Border border = new Border();
                 Grid grid = new Grid();
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 TextBlock textBlock1 = new TextBlock
@@ -65,12 +66,22 @@ namespace EmployeeINC
                     FontSize = 18,
                     FontFamily = new FontFamily("Bahnschrift")
                 };
+                var сотрудниковВДолжности = new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT DISTINCT * FROM Сотрудники WHERE Должность = {должности.ID_Должности}")).Length;
+                TextBlock textBlock3 = new TextBlock
+                {
+                    Text = сотрудниковВДолжности.ToString(),
+                    FontSize = 18,
+                    FontFamily = new FontFamily("Bahnschrift")
+                };
 
                 Grid.SetColumn(textBlock1, 0);
                 Grid.SetColumn(textBlock2, 1);
+                Grid.SetColumn(textBlock3, 2);
 
                 grid.Children.Add(textBlock1);
                 grid.Children.Add(textBlock2);
+                grid.Children.Add(textBlock3);
 
                 border.Name = "id_" + должности.ID_Должности;
                 border.Child = grid;
@@ -105,7 +116,7 @@ namespace EmployeeINC
                 };
                 menuItemEdit.Click += (sender, e) =>
                 {
-                    var редДолжности = new РедДолжности(должности);
+                    var редДолжности = new AddWindoww(должности);
                     редДолжности.Show();
                     Close();
                 };

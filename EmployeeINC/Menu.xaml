@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:EmployeeINC"
         mc:Ignorable="d"
         WindowStartupLocation ="CenterScreen"
-        Title="Menu" Height="300" Width="615" ResizeMode="NoResize">
+        Title="Menu" Height="400" Width="615" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>

@@ -113,6 +113,7 @@
       <DependentUpon>AddWindoww.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\Tables\Document.cs" />
     <Compile Include="Database\Tables\Table.cs" />
     <Compile Include="Database\Tables\User.cs" />
     <Compile Include="Database\Tables\Больничные.cs" />
@@ -151,9 +152,6 @@
     </Compile>
     <Compile Include="Windows\EmployeeStats.xaml.cs">
       <DependentUpon>EmployeeStats.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\РедДолжности.xaml.cs">
-      <DependentUpon>РедДолжности.xaml</DependentUpon>
     </Compile>
     <Page Include="Add.xaml">
       <SubType>Designer</SubType>
@@ -211,7 +209,6 @@
     <Page Include="Windows\Departments.xaml" />
     <Page Include="Windows\EmployeeProfile.xaml" />
     <Page Include="Windows\EmployeeStats.xaml" />
-    <Page Include="Windows\РедДолжности.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

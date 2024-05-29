@@ -41,6 +41,7 @@ namespace EmployeeINC.Windows
                 Grid grid = new Grid();
 
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
                 TextBlock textBlock1 = new TextBlock
                 {
@@ -48,8 +49,18 @@ namespace EmployeeINC.Windows
                     FontSize = 18,
                     FontFamily = new FontFamily("Bahnschrift")
                 };
+                var сотрудниковВОтделе = new Сотрудники().ConvertToTables(DB.Database.ExecuteQuery(
+                    $"SELECT * FROM Сотрудники WHERE Отдел = {отделы.ID_Отдела}")).Length;
+                TextBlock textBlock2 = new TextBlock
+                {
+                    Text = сотрудниковВОтделе.ToString(),
+                    FontSize = 18,
+                    FontFamily = new FontFamily("Bahnschrift")
+                };
                 Grid.SetColumn(textBlock1, 0);
+                Grid.SetColumn(textBlock2, 1);
                 grid.Children.Add(textBlock1);
+                grid.Children.Add(textBlock2);
 
                 border.Name = "id_" + отделы.ID_Отдела;
                 border.Child = grid;
