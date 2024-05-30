@@ -32,6 +32,11 @@
                     Width="227" Click="add_click" Content="Sign In" />
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Vertical">
+                    <TextBox GotFocus="RemoveText1" LostFocus="AddText1" Text="Вид отпуска"
+                             HorizontalContentAlignment="Left"
+                             VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
+                             BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="Type"
+                             Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     <ComboBox Name="ComboDol" FontSize="15" HorizontalContentAlignment="Left"
                               VerticalContentAlignment="Center" FontFamily="Bahnschrift" Width="193" Height="30"
                               Background="#1a1f25" Margin="0,10" />

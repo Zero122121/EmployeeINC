@@ -57,13 +57,12 @@ namespace EmployeeINC.Windows
             Образование.Text = "Образование: " + _сотрудник.образование;
             Серия.Text = "Серия: " + _сотрудник.серия;
             Номер.Text = "Номер: " + _сотрудник.номер;
-            Адрес.Text = "Адерс: " + _сотрудник.адрес;
+            Адрес.Text = "Адрес: " + _сотрудник.адрес;
             СемейноеПоложение.Text = "Семейное положение: " + _сотрудник.семейное_положение;
         }
 
         private void UpdateDocsList()
         {
-            for (int i = 0; i < DocsContent.Children.Count; i++) DocsContent.Children[i] = null;
             DocsContent.Children.Clear();
 
             var docs = (Document[])new Document().ConvertToTables(DB.Database.ExecuteQuery($"SELECT * FROM document WHERE employee_id = {_сотрудник.ID_Сотрудника};"));
@@ -75,11 +74,22 @@ namespace EmployeeINC.Windows
                     Margin = new Thickness(20, 5, 0, 0),
                     Name = $"id_{document.id_document}"
                 };
+                
                 button.Click += DownloadDocument;
                 TextBlock textBlock = new()
                 {
                     Text = document.name,
                     FontSize = 18
+                };
+                
+                ContextMenu contextMenu = new ContextMenu();
+                MenuItem removeDoc = new MenuItem() { Header = "Удалить документ" };
+                contextMenu.Items.Add(removeDoc);
+                button.ContextMenu = contextMenu;
+                removeDoc.Click += (sender, args) =>
+                {
+                    DB.Database.Query($"DELETE FROM document WHERE id_document = {document.id_document};");
+                    UpdateDocsList();
                 };
 
                 button.Content = textBlock;
@@ -117,20 +127,21 @@ namespace EmployeeINC.Windows
             string saveFilePath = saveFileDialog.FileName;
             File.WriteAllBytes(saveFilePath, fileContent);
         }
-
+        
         private void AddDocument(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new() { Filter = "Word Documents (*.docx)|*.docx" };
 
             if (openFileDialog.ShowDialog() != true) return;
             string filePath = openFileDialog.FileName;
+            string name = Path.GetFileName(filePath);
 
             // Чтение содержимого файла
             byte[] fileContent = File.ReadAllBytes(filePath);
 
             // Сохранение файла в базе данных
             var fileContentHex = BitConverter.ToString(fileContent).Replace("-", "");
-            DB.Database.ExecuteQuery($"INSERT INTO document (name, document, employee_id) VALUES ('{filePath}', x'{fileContentHex}', {_сотрудник.ID_Сотрудника})");
+            DB.Database.ExecuteQuery($"INSERT INTO document (name, document, employee_id) VALUES ('{name}', x'{fileContentHex}', {_сотрудник.ID_Сотрудника})");
             
             UpdateDocsList();
         }

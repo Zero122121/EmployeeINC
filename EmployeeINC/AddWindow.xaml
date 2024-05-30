@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmployeeINC" xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddWindow" Height="300" Width="500" ResizeMode="NoResize" WindowStyle="None"
+        Title="AddWindow" Height="500" Width="500" ResizeMode="NoResize" WindowStyle="None"
         AllowsTransparency="True" Background="Transparent">
     <Window.Resources>
         <Style TargetType="TextBox">
@@ -21,13 +20,12 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Foreground="White" Content="Сотрудник" FontFamily="Bahnschrift" FontSize="28"
                    Width="147" Height="40" HorizontalAlignment="Center" Margin="0,5,0,5" />
-            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Grid.Row="2" Height="36" Width="227" Click="add_click" Content="Сохранить" />
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -59,7 +57,7 @@
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="phone"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <TextBox GotFocus="RemoveText4" LostFocus="AddText4" Text="telegram nick" HorizontalContentAlignment="Left"
+                    <TextBox GotFocus="RemoveText4" LostFocus="AddText4" Text="Введите telegram ник" HorizontalContentAlignment="Left"
                              VerticalContentAlignment="Center" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray"
                              BorderBrush="#22272d" BorderThickness="2,2,2,2" Background="#1a1f25" Name="telegram"
                              Width="200" Height="35" Margin="0,5" HorizontalAlignment="Center" VerticalAlignment="Top" />
@@ -72,8 +70,27 @@
                               Width="200" Height="30"
                               Background="#1a1f25" Margin="0,7" />
                 </StackPanel>
-
             </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите живет" Name="Живет" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите дата рождение" Name="ДатаРождение" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите гражданство" Name="Гражданство" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите образование" Name="Образование" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите серия" Name="Серия" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите номер" Name="Номер" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите адрес" Name="Адрес" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                    <TextBox GotFocus="RemoveText5" LostFocus="AddText5" BorderBrush="#22272d" BorderThickness="2,2,2,2" VerticalContentAlignment="Center" Background="#1a1f25" Text="Введите семейное положение" Name="СемейноеПоложение" FontFamily="Bahnschrift" FontSize="15" Foreground="Gray" Width="200" Height="35" Margin="0,5" />
+                </StackPanel>
+            </Grid>
+            <Button Style="{DynamicResource RoundButton}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Grid.Row="3" Height="36" Width="227" Click="add_click" Content="Сохранить" />
         </Grid>
     </Border>
 </Window>

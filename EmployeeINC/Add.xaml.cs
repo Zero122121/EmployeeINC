@@ -43,6 +43,7 @@ namespace EmployeeINC
             ComboDol.SelectedItem = $"{_employee.Сотрудник.Фамилия} {_employee.Сотрудник.Имя[0]}. {_employee.Сотрудник.Отчество[0]}.";
             DateNach.SelectedDate = DateTime.Parse(_employee.Дата_начала);
             DateCon.SelectedDate = DateTime.Parse(_employee.Дата_завершения);
+            Type.Text = _employee.Вид_отпуска;
         }
 
         private void add_click(object sender, RoutedEventArgs e)
@@ -51,7 +52,8 @@ namespace EmployeeINC
             {
                 ID_Сотрудника = _сотрудники.FirstOrDefault(сотрудник=> $"{сотрудник.Фамилия} {сотрудник.Имя[0]}. {сотрудник.Отчество[0]}." == ComboDol.SelectedItem.ToString()).ID_Сотрудника,
                 Дата_начала = DateNach.SelectedDate.ToString(),
-                Дата_завершения = DateCon.SelectedDate.ToString()
+                Дата_завершения = DateCon.SelectedDate.ToString(),
+                Вид_отпуска = Type.Text
             };
             if (_isEdit)
             {
@@ -61,7 +63,7 @@ namespace EmployeeINC
             else
             {
                 DB.Database.Query(
-                    $"INSERT INTO Отпуски (Дата_начала, Дата_завершения, ID_Сотрудника) VALUES ('{сотрудники.Дата_начала}', '{сотрудники.Дата_завершения}', {сотрудники.ID_Сотрудника})");
+                    $"INSERT INTO Отпуски (Дата_начала, Дата_завершения, ID_Сотрудника, вид_отпуска) VALUES ('{сотрудники.Дата_начала}', '{сотрудники.Дата_завершения}', {сотрудники.ID_Сотрудника}, '{сотрудники.Вид_отпуска}')");
             }
 
             MessageBox.Show("Данные были добавлены в базу");
@@ -78,6 +80,24 @@ namespace EmployeeINC
                 DB.Database.ExecuteQuery($"SELECT * FROM Сотрудники;"));
             Dolsh = items;
             DataContext = Dolsh;
+        }
+        
+        private void RemoveText1(object sender, EventArgs e)
+        {
+            if (Type.Text == "Вид отпуска")
+            {
+                Type.Text = "";
+                Type.Foreground = Brushes.White;
+            }
+        }
+
+        private void AddText1(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Type.Text))
+            {
+                Type.Text = "Вид отпуска";
+                Type.Foreground = Brushes.Gray;
+            }
         }
     }
 }

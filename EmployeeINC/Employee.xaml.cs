@@ -96,7 +96,7 @@ namespace EmployeeINC
 
                 menuItem.Click += (sender, e) =>
                 {
-                    DB.Database.Query($"DELETE FROM document WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
+                    DB.Database.Query($"DELETE FROM document WHERE employee_id = {сотрудник.ID_Сотрудника}");
                     DB.Database.Query($"DELETE FROM Отпуски WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     DB.Database.Query($"DELETE FROM Больничные WHERE ID_Сотрудника = {сотрудник.ID_Сотрудника}");
                     
